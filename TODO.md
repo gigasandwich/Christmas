@@ -35,7 +35,7 @@
   - Seed the database with at least 50 gift items categorized by type (boy, girl, neutral).
   - Ensure all user actions (login, registration, deposit, gift selection) are stored and retrieved from the database.
 
-- [ ] **Set up project structure**
+- [x] **Set up project structure**
   - Create folders for `routes`, `controllers`, and `models`.
 
 - [ ] **Routes**
