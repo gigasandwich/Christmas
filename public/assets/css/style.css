@@ -34,17 +34,21 @@ html[data-bs-theme="dark"] header {
     box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* Light shadow with white color */
 }
 
-/* Button in dark theme */
+/* ---------------------------
+   Bootstrap classes in dark mode
+--------------------------- */
+
 html[data-bs-theme="dark"] .btn {
     color: whitesmoke; 
 }
+[data-bs-theme="dark"] .shadow-lg {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), 0 0 25px rgba(255, 255, 255, 0.05) !important; /* Lighter glow from the card */
+}
 
+/* ---------------------------
+   Theme toggler button
+--------------------------- */
 
-/*
-------------------------------------------------
------------- THEME TOGGLER BUTTON 
-------------------------------------------------
-*/
 
 .theme-toggler {
     display: flex;
@@ -108,23 +112,22 @@ html[data-bs-theme="dark"] .theme-toggler .icon {
 
 
 
-/*
-------------------------------------------------
------------- LOGO
-------------------------------------------------
-*/
-
+/* ---------------------------
+   Logo
+--------------------------- */
 .logo {
-    height: 40px;
-    background-color: var(--primary-green); /* Dark Green */
+    width: 150px; 
+    height: 40px; 
+    background-color: var(--primary-green); 
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 16px 4px 16px 4px; /* Unique border radius */
-    padding: 0 10px;
+    border-radius: 16px 4px 16px 4px; 
+    padding: 0; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer; /* Indicate interactivity */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer; 
+    overflow: hidden; 
 }
 
 .logo .text {
@@ -134,6 +137,9 @@ html[data-bs-theme="dark"] .theme-toggler .icon {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: color 0.3s ease;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; /* Truncate text if necessary */
 }
 
 .logo .accent {
@@ -142,6 +148,9 @@ html[data-bs-theme="dark"] .theme-toggler .icon {
     font-weight: bold;
     font-style: italic;
     transition: color 0.3s ease;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
 
 /* Hover Effect */

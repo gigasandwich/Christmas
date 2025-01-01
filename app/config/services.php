@@ -18,11 +18,19 @@ use Tracy\Debugger;
 
 // Uncomment the below lines if you want to add a Flight::db() service
 // In development, you'll want the class that captures the queries for you. In production, not so much.
-// $pdoClass = Debugger::$showBar === true ? PdoQueryCapture::class : PdoWrapper::class;
-// $app->register('db', $pdoClass, [ $dsn, $config['database']['user'] ?? null, $config['database']['password'] ?? null ]);
+$pdoClass = Debugger::$showBar === true ? PdoQueryCapture::class : PdoWrapper::class;
+$app->register('db', $pdoClass, [ $dsn, $config['database']['user'] ?? null, $config['database']['password'] ?? null ]);
 
 // Got google oauth stuff? You could register that here
 // $app->register('google_oauth', Google_Client::class, [ $config['google_oauth'] ]);
 
 // Redis? This is where you'd set that up
 // $app->register('redis', Redis::class, [ $config['redis']['host'], $config['redis']['port'] ]);
+
+Flight::map('dbName', function () {
+    return "christmas";
+});
+
+Flight::map('userModel', function () {
+    return new App\Models\UserModel(Flight::db()); // So we don't have to use/include everytime
+});

@@ -2,7 +2,7 @@
 
 ## Front-End
 
-- [ ] **Set up project structure**
+- [x] **Set up project structure**
   - Create a `views` folder with subfolders for different sections:
     - `landing`: Landing page showing what the website does, with options to login or sign up.
     - `auth`: Login and registration pages.
@@ -29,11 +29,10 @@
 
 ## Back-End
 
-- [ ] **MySQL Database Management**
+- [x] **MySQL Database Management**
   - Set up MySQL database for user and gift management.
   - Design tables for users, gifts, and deposits.
   - Seed the database with at least 50 gift items categorized by type (boy, girl, neutral).
-  - Ensure all user actions (login, registration, deposit, gift selection) are stored and retrieved from the database.
 
 - [x] **Set up project structure**
   - Create folders for `routes`, `controllers`, and `models`.
@@ -44,7 +43,7 @@
     - Main page for selecting gifts and depositing money.
     - Admin panel for managing deposits.
 
-- [ ] **Controllers**
+- [x] **Controllers**
   - Create `AuthController` for user login and registration logic.
   - Create `MainController` for managing gift selection, deposits, and user-related actions.
   - Create `AdminController` for admin login and deposit validation.
@@ -54,9 +53,9 @@
   - Create `GiftModel` for handling gift data (e.g., gift categories, costs).
   - Create `DepositModel` for managing user deposits.
 
-- [ ] **User Authentication**
+- [x] **User Authentication**
   - Implement secure user login and registration logic.
-  - Use hashed passwords and session/token management for authentication.
+  - Use session management for authentication.
 
 - [ ] **Deposit Management**
   - Create functionality to allow users to deposit money into their accounts.

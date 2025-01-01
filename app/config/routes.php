@@ -18,7 +18,7 @@ $router->group('/auth', function () use ($router, $app) {
     $router->get("/", [AuthController::class, 'showUserLogin']); 
 
     $router->get('/user', [AuthController::class,'showUserLogin']); // Mihiditra page
-    $router->get("/check-user", [AuthController::class, 'showUserLogin']); // Login tena login
+    $router->post("/check-user", [AuthController::class, 'userLogin']); // Login tena login
 
     $router->get("/admin", [AuthController::class, 'showAdminLogin']);
     $router->post("/check-admin", [AuthController::class, 'adminLogin']);
@@ -26,4 +26,8 @@ $router->group('/auth', function () use ($router, $app) {
 
     $router->get("/register", [AuthController::class, 'showRegistration']);
     $router->post("/create-user", [AuthController::class, 'register']);    
+});
+
+$router->group("/dashboard", function () use ($router, $app) {
+    // TODO: Create the controller for this
 });

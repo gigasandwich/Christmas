@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Christmas Gift Site</title>
+    <title>Home Giftmas</title>
     <!-- Framework css -->
     <link rel="stylesheet" href="/assets/framework/css/bootstrap.min.css">
     <!-- Custom css -->
@@ -15,10 +15,10 @@
 <body>
     <!-- Navbar -->
     <header class="py-2">
-        <nav class="navbar navbar-expand-lg shadow">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow fixed-top">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand d-flex" href="/">
+                <a class="navbar-brand" href="/">
                     <?php include './layouts/logo.php' ?>
                 </a>
                 <!-- Toggle Button for Mobile View -->
@@ -40,11 +40,10 @@
                         </li>
                     </ul>
             </div>
-
         </nav>
     </header>
 
-    <section class="hero container py-5">
+    <section class="hero container mt-5 py-5">
         <div class="row justify-content-center align-items-center gap-5">
             <!-- Text Section -->
             <div class="col-md-5 text-center">
