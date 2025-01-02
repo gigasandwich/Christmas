@@ -1,4 +1,4 @@
-<section class="vh-100">
+<section class="vh-75">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-10">
@@ -8,7 +8,7 @@
                         <div class="col-lg-6">
                             <div class="card-body p-md-5 mx-md-4">
                                 <div class="text-center">
-                                    <h4 class="mt-1 mb-5 pb-1 text-primary">Register</h4>
+                                    <h4 class="mt-1 mb-3 text-primary">Register</h4>
                                 </div>
                                 <form action="/auth/create-user" method="post">
                                     <p class="lead">Please create an account to get started</p>

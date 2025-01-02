@@ -56,6 +56,7 @@ class AuthController {
             if ($result['status'] === 'success') {
                 // Session is started at routes.php
                 $_SESSION['user'] = $result['user'];
+                $_SESSION['loading'] = true;
                 Flight::redirect('/dashboard');
             } else {
                 $data = ['page' => 'user', 'message' => "Invalid username or password."]; // Message is not the one from the model, because it's more convenient to do this
@@ -120,6 +121,6 @@ class AuthController {
 
     public function logout() {
         session_destroy();
-        Flight::redirect('landing');
+        Flight::redirect('/');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 use App\Controllers\AuthController;
+use App\Controllers\DashboardController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -9,6 +10,8 @@ use flight\net\Router;
  * @var Router $router 
  * @var Engine $app
  */
+
+session_start();
 
 $router->get("/", function (){
     Flight::render('landing/index');
@@ -26,8 +29,11 @@ $router->group('/auth', function () use ($router, $app) {
 
     $router->get("/register", [AuthController::class, 'showRegistration']);
     $router->post("/create-user", [AuthController::class, 'register']);    
+
+    $router->get("/logout", [AuthController::class,"logout"]);
 });
 
 $router->group("/dashboard", function () use ($router, $app) {
-    // TODO: Create the controller for this
+    $router->get("/", [DashboardController::class,"showDashboard"]);
+    $router->get("/balance", [DashboardController::class,"showBalance"]);
 });

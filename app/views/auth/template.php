@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <header class="py-2">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow fixed-top">
+    <header class="shadow fixed-top">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <!-- Logo -->
                 <a class="navbar-brand" href="/">
@@ -49,8 +49,8 @@
         </nav>
     </header>
 
-    <!-- if lg: Remove mt, else: mt-3  -->
-    <main class="mt-5 mt-lg-0"> 
+    <!-- + margin via theme.js  -->
+    <main class=""> 
         <?php include $page . '.php' ?>
     </main>
 

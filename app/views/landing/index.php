@@ -7,6 +7,7 @@
     <title>Home Giftmas</title>
     <!-- Framework css -->
     <link rel="stylesheet" href="/assets/framework/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/framework/fontawesome-free-6.7.2-web/css/all.min.css">
     <!-- Custom css -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/home.css">
@@ -14,8 +15,8 @@
 
 <body>
     <!-- Navbar -->
-    <header class="py-2">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow fixed-top">
+    <header class="shadow fixed-top">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <!-- Logo -->
                 <a class="navbar-brand" href="/">
@@ -39,73 +40,75 @@
                             <a class="btn btn-success w-100" href="auth/register">Register</a>
                         </li>
                     </ul>
-            </div>
+                </div>
         </nav>
     </header>
 
-    <section class="hero container mt-5 py-5">
-        <div class="row justify-content-center align-items-center gap-5">
-            <!-- Text Section -->
-            <div class="col-md-5 text-center">
-                <h1 class="display-4 fw-bold">Welcome to Giftmas!</h1>
-                <p class="lead">Experience the joy of random Christmas gifts for your loved ones. Register now and start your holiday journey!</p>
-                <a href="auth/register" class="btn btn-success btn-lg mt-3">Get Started</a>
-            </div>
-
-            <!-- Carousel Section -->
-            <div class="col-md-6 text-bg-danger rounded p-2" id="landingCarousel">
-                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <!-- Slide 1: User Registration -->
-                        <div class="carousel-item active">
-                            <img src="/assets/img/christmas/undraw_christmas-mode_nebj.svg" class="d-block w-100 img-fluid"
-                                alt="User Registration">
-                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-                                <h5 class="text-white">Easy Registration</h5>
-                                <p class="text-light">Create an account to start your journey and unlock exciting
-                                    Christmas gift suggestions.</p>
-                            </div>
-                        </div>
-
-                        <!-- Slide 2: Gift Suggestions -->
-                        <div class="carousel-item">
-                            <img src="/assets/img/christmas/undraw_gifts_0twc.svg" class="d-block w-100 img-fluid"
-                                alt="Gift Suggestions">
-                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-                                <h5 class="text-white">Tailored Gift Suggestions</h5>
-                                <p class="text-light">Get personalized gift ideas for boys, girls, or neutral
-                                    preferences—perfect for every child!</p>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3: Budget Management -->
-                        <div class="carousel-item">
-                            <img src="/assets/img/christmas/undraw_santa-claus_1z1i.svg"
-                                class="d-block w-100 img-fluid" alt="Budget Management">
-                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-                                <h5 class="text-white">Smart Budget Control</h5>
-                                <p class="text-light">Manage your deposit wisely and ensure the total gift cost fits
-                                    within your budget.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Carousel Controls -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+    <main class="py-5">
+        <section class="hero container">
+            <div class="row justify-content-center align-items-center gap-5">
+                <!-- Text Section -->
+                <div class="col-md-5 text-center">
+                    <h1 class="display-4 fw-bold">Welcome to Giftmas!</h1>
+                    <p class="lead">Experience the joy of random Christmas gifts for your loved ones. Register now and
+                        start your holiday journey!</p>
+                    <a href="auth/register" class="btn btn-success btn-lg mt-3">Get Started</a>
                 </div>
 
-            </div>
-        </div>
-    </section>
+                <!-- Carousel Section -->
+                <div class="col-md-6 text-bg-danger rounded p-2" id="landingCarousel">
+                    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Slide 1: User Registration -->
+                            <div class="carousel-item active">
+                                <img src="/assets/img/christmas/undraw_christmas-mode_nebj.svg"
+                                    class="d-block w-100 img-fluid" alt="User Registration">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                                    <h5 class="text-white">Easy Registration</h5>
+                                    <p class="text-light">Create an account to start your journey and unlock exciting
+                                        Christmas gift suggestions.</p>
+                                </div>
+                            </div>
 
+                            <!-- Slide 2: Gift Suggestions -->
+                            <div class="carousel-item">
+                                <img src="/assets/img/christmas/undraw_gifts_0twc.svg" class="d-block w-100 img-fluid"
+                                    alt="Gift Suggestions">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                                    <h5 class="text-white">Tailored Gift Suggestions</h5>
+                                    <p class="text-light">Get personalized gift ideas for boys, girls, or neutral
+                                        preferences—perfect for every child!</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3: Budget Management -->
+                            <div class="carousel-item">
+                                <img src="/assets/img/christmas/undraw_santa-claus_1z1i.svg"
+                                    class="d-block w-100 img-fluid" alt="Budget Management">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                                    <h5 class="text-white">Smart Budget Control</h5>
+                                    <p class="text-light">Manage your deposit wisely and ensure the total gift cost fits
+                                        within your budget.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Carousel Controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Framework Scripts -->
     <script src="/assets/framework/js/jquery-3.7.1.min.js"></script>

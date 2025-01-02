@@ -1,3 +1,4 @@
+// Theme toggling
 $(document).ready(function () {
     const $html = $('html');
     const $themeToggler = $('#themeToggler');
@@ -12,9 +13,21 @@ $(document).ready(function () {
     // Toggle theme and save to localStorage
     $themeToggler.on('click', function () {
         const currentTheme = $html.attr('data-bs-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = currentTheme == 'light' ? 'dark' : 'light';
         $html.attr('data-bs-theme', newTheme);
         $themeToggler.attr('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
     });
+});
+
+// Main margin to the header
+document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('header');
+    const main = document.querySelector('main');
+    
+    if (header && main) {
+        const headerHeight = header.offsetHeight;
+        main.style.marginTop = `${headerHeight + 50}px`;
+        console.log(main.style.marginTop);
+    }
 });
