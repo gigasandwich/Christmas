@@ -2,7 +2,7 @@ $('#deposit-btn').on('click', (e) => {
     e.preventDefault();
     amount = $('#amount').val();
     $.ajax({
-        url: '/deposit',
+        url: '/api/add/deposit',
         type: 'POST',
         data: { amount },
         success: function (response) {

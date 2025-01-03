@@ -44,12 +44,15 @@
                             <a class="nav-link" href="#deposit-form">Make a deposit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/balance">Your balance</a>
+                            <a class="nav-link" href="/user/account">Your account</a>
                         </li>
                     </ul>
 
                     <!-- End -->
                     <ul class="navbar-nav ms-auto d-flex gap-2 align-items-center">
+                        <li class="nav-item me-3" id="balance" value="<?= "$balance" ?>">
+                            <?= "$$balance" ?>
+                        </li>
                         <!-- Theme Switch Button -->
                         <li class="nav-item me-3">
                             <?php include './layouts/btn-theme.php'; ?>
@@ -92,7 +95,25 @@
         <?php include $page . '.php' ?>
     </main>
 
-    <footer></footer>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p></p> <!-- The message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Framework Scripts -->
     <script src="/assets/framework/js/jquery-3.7.1.min.js"></script>
@@ -101,7 +122,8 @@
     <script src="/assets/js/theme.js"></script>
     <script src="/assets/js/gift.js"></script>
     <script src="/assets/js/deposit.js"></script>
-    <!-- Loading animation -->
+
+    <!-- Loading animation, not to use jquery for these -->
     <script>
         <?php if (isset($_SESSION['loading']) && $_SESSION['loading'] === true): ?>
             document.querySelector('#loading').style.display = 'flex';
@@ -113,6 +135,16 @@
         <?php endif; ?>
         <?php unset($_SESSION['loading']); ?>
     </script>
+
+    <!-- Message modal, also not to use jquery -->
+    <?php if (!empty($message)): ?>
+        <script>
+            var messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+            document.querySelector('#messageModal .modal-body p').textContent = "<?= $message ?>";
+            messageModal.show();
+        </script>
+    <?php endif; ?>
+
 </body>
 
 </html>

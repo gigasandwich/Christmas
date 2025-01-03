@@ -141,17 +141,13 @@ class GiftModel
   {
     $suggestions = $_SESSION['gift_suggestions'] ?? null;
 
-    if (!$suggestions) {
-      return ['error' => 'No gift suggestions available'];
-    }
-
     $totalAmount = 0;
 
     foreach ($suggestions as $gift) {
       $totalAmount += $gift['price'];
     }
 
-    $remainingBalance = Flight::userModel()->getActualUserBalance() ?? 0;
+    $remainingBalance = Flight::userModel()->getActualUserBalance();
 
     return [
       'total_amount' => $totalAmount,
@@ -159,24 +155,37 @@ class GiftModel
     ];
   }
 
-  public function finalizeSelections($userId)
+  // The final thing to do
+  public function finalizeSelections($userId, $suggestions)
   {
-    $suggestions = $_SESSION['gift_suggestions'] ?? null;
-
-    if (!$suggestions) {
-      return ['error' => 'No suggestions to finalize'];
-    }
-
+    
+    // Too lazy to do prepare and exec
     foreach ($suggestions as $gift) {
-      $this->db->query("
-            INSERT INTO christmas_selected_gifts (user_id, gift_id)
-            VALUES ($userId, {$gift['gift_id']})
-        ");
+      // Add gifts to user
+      $this->db->query("INSERT INTO christmas_gift_transaction (user_id, gift_id) VALUES ($userId, {$gift['gift_id']})");
+    }
+    // Retrieve money from the user
+    $totalPrice = $this->getTotalPrice();
+    $this->db->query("INSERT INTO christmas_move (user_id, amount, description, is_accepted) VALUES ($userId, -$totalPrice, 'Payment', 1)");
+
+    return true;
+  }
+
+  public function calculateTotalPrice($gifts)
+  {
+    $totalPrice = 0;
+
+    foreach ($gifts as $gift) {
+      $totalPrice += $gift['price'];
     }
 
-    unset($_SESSION['gift_suggestions']);
-
-    return ['success' => 'Gifts finalized successfully'];
+    return number_format($totalPrice, 2);
   }
+
+  public function getTotalPrice()
+  {
+    return $this->calculateTotalPrice($_SESSION['gift_suggestions']);
+  }
+
 
 }

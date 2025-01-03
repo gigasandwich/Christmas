@@ -24,7 +24,7 @@
                                     <i class="fa fa-trash"></i> Reject
                                 </a>
                                 <a href="/api/accept/deposit/" class="btn btn-success btn-sm w-50 accept-btn" data-deposit-id="<?= $deposit['move_id'] ?>">
-                                    <i class="fa fa-thumb"></i> Accept
+                                    <i class="fa fa-check"></i> Accept
                                 </a>
                             </div>
                         </td>

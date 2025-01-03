@@ -65,7 +65,7 @@ class MoveModel {
      * ---------------------------
      */
     public function addDeposit($userId, $amount) {
-        $query = "INSERT INTO christmas_move (user_id, amount, description) VALUES ? ? ?";
+        $query = "INSERT INTO christmas_move (user_id, amount, description) VALUES (?, ?, ?)";
         $STH = $this->db->prepare($query);
         if ($STH->execute([$userId, $amount, 'Deposit']))
             return true;

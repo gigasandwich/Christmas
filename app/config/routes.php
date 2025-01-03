@@ -41,6 +41,7 @@ $router->group('/auth', function () use ($router, $app) {
 $router->group('/dashboard', function () use ($router, $app) {
     $router->get('/', [DashboardController::class,'showDashboard']);
     $router->get('/balance', [DashboardController::class,'showBalance']);
+    $router->post('/validate-gifts', [DashboardController::class,'validateGifts']);
 });
 
 // Admin
@@ -54,7 +55,7 @@ $router->group('/api', function () use ($router, $app) {
 
     // Deposits
     // User
-    $router->post('/', [MoveController::class, 'addDeposit']);
+    $router->post('/add/deposit', [MoveController::class, 'addDeposit']);
     // Admin
     $router->post('/accept/deposit/', [AdminController::class, 'acceptDeposit']);
     $router->post('/reject/deposit/', [AdminController::class, 'rejectDeposit']);

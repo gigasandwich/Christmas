@@ -64,7 +64,7 @@ CREATE TABLE christmas_gift_transaction (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     gift_id INT,
-    quantity INT NOT NULL,
+    quantity INT,
     FOREIGN KEY (user_id) REFERENCES christmas_user(user_id),
     FOREIGN KEY (gift_id) REFERENCES christmas_gift(gift_id)
 );

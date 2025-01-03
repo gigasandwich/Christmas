@@ -1,8 +1,9 @@
 $(document).ready(function () {
     // Show gifts after filling the form 
+    let totalPrice = 0;
     $("#view-gifts").click(function (e) {
         e.preventDefault();
-        
+
         const girlCount = $("#girl").val() || 0;
         const boyCount = $("#boy").val() || 0;
 
@@ -31,25 +32,26 @@ $(document).ready(function () {
             data: { girls, boys },
             success: function (response) {
                 console.log(response);
-                handleGiftSuggestions(response);
+
+                const gifts = response.gifts;
+                totalPrice = response.total_price; // Already defined up there to use it below
+                const giftList = $('#gift-list .row');
+                giftList.empty();
+
+                if (!gifts || gifts.length === 0) {
+                    giftList.append('<p class="text-center">No gifts available for the selected input.</p>');
+                    return;
+                }
+
+                gifts.forEach(gift => {
+                    giftList.append(createGiftCard(gift));
+                });
+            $("#total-price-button").attr('data-value', totalPrice); 
+            $("#total-price-button").text(`$${totalPrice}`);
             },
             error: function () {
                 alert("Error fetching gifts.");
             }
-        });
-    }
-
-    function handleGiftSuggestions(response) {
-        const giftList = $('#gift-list .row');
-        giftList.empty();
-
-        if (!response || response.length === 0) {
-            giftList.append('<p class="text-center">No gifts available for the selected input.</p>');
-            return;
-        }
-
-        response.forEach(gift => {
-            giftList.append(createGiftCard(gift));
         });
     }
 
@@ -63,7 +65,8 @@ $(document).ready(function () {
             method: 'GET', // TODO: make it POST method but too lazy
             data: { index: giftIndex },
             success: function (response) {
-                const newGift = response;
+                const newGift = response.new_gift;
+                totalPrice = response.total_price;
 
                 card.find('.card-img-top')
                     .attr('src', '/assets/img/gifts/' + newGift['pic'])
@@ -71,10 +74,12 @@ $(document).ready(function () {
                 card.find('.card-title').text(newGift['gift_name']);
                 card.find('.card-text').first().text(newGift['description']);
                 card.find('.card-text strong').next().text(`$${newGift['price']}`);
-                card.data('gift-id', newGift['gift_id']); 
+                card.data('gift-id', newGift['gift_id']);
 
                 // Reset the button 
                 btn.text('Replace Gift').prop('disabled', false);
+                // Update the total price displayed on the page
+                $('#total-price-button').text(`$${totalPrice}`);
             },
             error: function () {
                 alert('Error replacing the gift. Please try again.');
@@ -126,4 +131,29 @@ $(document).ready(function () {
             </div>
         `;
     }
+
+    // Final validation
+    let balance = parseFloat($('#balance').attr('value'));
+    $("#validate-btn").click(function () {
+        const remainingBalance = balance - totalPrice;
+
+        if (remainingBalance < 0) {
+            alert("You do not have enough balance to finalize the purchase.");
+            return;
+        }
+
+        // Populate modal with calculated values
+        $("#totalCost").text(`$${totalPrice}`);
+        $("#remainingBalance").text(`$${remainingBalance}`);
+        $("#confirmationModal").modal("show");
+    });
+
+    // Submit form when modal confirmation is accepted
+    $("#confirmValidation").click(function () {
+        $("#totalPriceInput").val(totalPrice);
+        const remainingBalance = balance - totalPrice;
+        $("#remainingBalanceInput").val(remainingBalance);
+        $("#validationForm").submit();
+    });
+    
 });
