@@ -9,7 +9,7 @@
                         <label for="amount">Deposit Amount ($)</label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success w-50">Submit Deposit</button>
+                        <button type="submit" class="btn btn-success w-50" id="deposit-btn">Submit Deposit</button>
                     </div>
                 </form>
             </div>

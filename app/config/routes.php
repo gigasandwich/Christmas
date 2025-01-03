@@ -2,6 +2,8 @@
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\AdminController;
+use App\Controllers\MoveController;
+
 
 use flight\Engine;
 use flight\net\Router;
@@ -51,6 +53,9 @@ $router->group('/api', function () use ($router, $app) {
     $router->get('/gifts', [DashboardController::class, 'getGifts']);
 
     // Deposits
+    // User
+    $router->post('/', [MoveController::class, 'addDeposit']);
+    // Admin
     $router->post('/accept/deposit/', [AdminController::class, 'acceptDeposit']);
     $router->post('/reject/deposit/', [AdminController::class, 'rejectDeposit']);
 

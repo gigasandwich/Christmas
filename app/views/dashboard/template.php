@@ -100,6 +100,7 @@
     <!-- Custom Scripts -->
     <script src="/assets/js/theme.js"></script>
     <script src="/assets/js/gift.js"></script>
+    <script src="/assets/js/deposit.js"></script>
     <!-- Loading animation -->
     <script>
         <?php if (isset($_SESSION['loading']) && $_SESSION['loading'] === true): ?>

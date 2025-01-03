@@ -5,10 +5,8 @@ $(document).ready(function () {
      * it will only work for .btn-primary elements that exist at the time the handler is assigned. 
      * Any new buttons added after that won't trigger the click event. 
      * By attaching the event handler to a parent container (like #gift-list), you avoid potential duplication of code and ensure maintainability. You don't have to re-bind click handlers every time you update or replace the .btn-primary elements.
-     */
-    
-        
-    // $('.reject-btn').on('click', function(e){: Won't work
+     * So $('.reject-btn').on('click', function(e){}) Won't work 
+     */        
 
     // REJECT
     $('#deposit-list').on('click', '.reject-btn', function (e) {
@@ -19,7 +17,6 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify({ deposit_id: depositId }),
             contentType: 'application/json',
-            dataType: 'json',
             success: function (response) {
                 updateTable(response);
             },
@@ -38,7 +35,6 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify({ deposit_id: depositId }),
             contentType: 'application/json',
-            dataType: 'json',
             success: function (response) {
                 updateTable(response);
             },

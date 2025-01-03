@@ -2,9 +2,9 @@ $(document).ready(function () {
     // Show gifts after filling the form 
     $("#view-gifts").click(function (e) {
         e.preventDefault();
-
-        const girlCount = parseInt($("#girl").val(), 10) || 0;
-        const boyCount = parseInt($("#boy").val(), 10) || 0;
+        
+        const girlCount = $("#girl").val() || 0;
+        const boyCount = $("#boy").val() || 0;
 
         if (girlCount <= 0 && boyCount <= 0) {
             alert("Please enter the number of boys or girls to suggest gifts for");
@@ -59,13 +59,12 @@ $(document).ready(function () {
         btn.text('Loading...').prop('disabled', true);
 
         $.ajax({
-            url: '/api/replace-gift', // Consider using POST or PUT if modifying data
-            method: 'GET', // Consider PUT/POST for actual data modification
+            url: '/api/replace-gift',
+            method: 'GET', // TODO: make it POST method but too lazy
             data: { index: giftIndex },
             success: function (response) {
                 const newGift = response;
 
-                // Replace all gift attributes
                 card.find('.card-img-top')
                     .attr('src', '/assets/img/gifts/' + newGift['pic'])
                     .attr('alt', newGift['gift_name']);
@@ -74,7 +73,7 @@ $(document).ready(function () {
                 card.find('.card-text strong').next().text(`$${newGift['price']}`);
                 card.data('gift-id', newGift['gift_id']); 
 
-                // Reset the button text and enable it
+                // Reset the button 
                 btn.text('Replace Gift').prop('disabled', false);
             },
             error: function () {

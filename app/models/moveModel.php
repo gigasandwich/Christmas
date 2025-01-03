@@ -64,6 +64,14 @@ class MoveModel {
      * ADD/REMOVE/UPDATE 
      * ---------------------------
      */
+    public function addDeposit($userId, $amount) {
+        $query = "INSERT INTO christmas_move (user_id, amount, description) VALUES ? ? ?";
+        $STH = $this->db->prepare($query);
+        if ($STH->execute([$userId, $amount, 'Deposit']))
+            return true;
+        return false;
+    }
+
     public function acceptDeposit($deposit_id) {
         $query = "UPDATE christmas_move SET is_accepted = 1 WHERE move_id = ?";
         $STH = $this->db->prepare($query);
