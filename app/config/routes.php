@@ -51,7 +51,9 @@ $router->group('/api', function () use ($router, $app) {
     $router->get('/gifts', [DashboardController::class, 'getGifts']);
 
     // Deposits
-    $router->get('/accept/deposit/@deposit_id', [AdminController::class, 'acceptDeposit']);
-    $router->get('/reject/deposit/@deposit_id', [AdminController::class, 'rejectDeposit']);
+    $router->post('/accept/deposit/', [AdminController::class, 'acceptDeposit']);
+    $router->post('/reject/deposit/', [AdminController::class, 'rejectDeposit']);
 
+    // Gifts
+    $router->get('/replace-gift', [DashboardController::class, 'replaceGift']);
 });

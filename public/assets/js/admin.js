@@ -12,17 +12,19 @@ $(document).ready(function () {
 
     // REJECT
     $('#deposit-list').on('click', '.reject-btn', function (e) {
-        e.preventDefault(); 
-
+        e.preventDefault(); // Doesn't show the pretty print json response
+        const depositId = $(this).data('deposit-id');
         $.ajax({
             url: $(this).attr('href'),
-            type: 'GET',
+            type: 'POST',
+            data: JSON.stringify({ deposit_id: depositId }),
+            contentType: 'application/json',
             dataType: 'json',
             success: function (response) {
                 updateTable(response);
             },
             error: function (xhr, status, error) {
-                alert("Error rejecting deposit.");
+                alert("Error rejecting deposit.", error);
             }
         });
     });
@@ -30,16 +32,18 @@ $(document).ready(function () {
     // ADD
     $('#deposit-list').on('click', '.accept-btn', function (e) {
         e.preventDefault(); 
-
+        const depositId = $(this).data('deposit-id');
         $.ajax({
             url: $(this).attr('href'),
-            type: 'GET',
+            type: 'POST',
+            data: JSON.stringify({ deposit_id: depositId }),
+            contentType: 'application/json',
             dataType: 'json',
             success: function (response) {
                 updateTable(response);
             },
             error: function (xhr, status, error) {
-                alert("Error accepting deposit.");
+                alert("Error accepting deposit.", error);
             }
         });
     });
@@ -52,14 +56,14 @@ $(document).ready(function () {
             let html = `
                     <tr>
                         <td scope="row"><a href="/user/${deposit['user_id']}}">${deposit['username']}</a></td>
-                        <td>${deposit['amount']} $</td>
-                        <td>${deposit['date']}}/td>
+                        <td>${deposit['amount']}</td>
+                        <td>${deposit['date']}</td>
                         <td>
                             <div class="d-flex gap-3">
-                                <a href="/api/reject/deposit/${deposit['move_id']}" class="btn btn-outline-danger btn-sm w-50 reject-btn">
+                                <a href="/api/reject/deposit/" class="btn btn-outline-danger btn-sm w-50 reject-btn" data-deposit-id=${deposit['move_id']}>
                                     <i class="fa fa-trash"></i> Reject
                                 </a>
-                                <a href="/api/accept/deposit/${deposit['move_id']}" class="btn btn-success btn-sm w-50 accept-btn">
+                                <a href="/api/accept/deposit/" class="btn btn-success btn-sm w-50 accept-btn" data-deposit-id=${deposit['move_id']}>
                                     <i class="fa fa-thumb"></i> Accept
                                 </a>
                             </div>

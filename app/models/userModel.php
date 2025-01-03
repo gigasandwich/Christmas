@@ -82,14 +82,20 @@ class userModel {
      * ---------------------------
      */
     public function getUserBalance($user_id) {
-        $query = "
-            SELECT current_balance 
-            FROM christmas_user_balance_view 
-            WHERE user_id = ?
-        ";
+        $query = "SELECT current_balance FROM christmas_user_balance_view WHERE user_id = ?";
         $STH = $this->db->prepare($query);
         $STH->execute([$user_id]);
         $row = $STH->fetch(PDO::FETCH_ASSOC); // Fetch we only need: one row
         return $row['current_balance'] ?? 0;
+    }
+
+    // Called in giftModel too
+    public function getActualUserBalance() {
+        if (!isset($_SESSION['user'])) {
+            $error = "You must be logged in to access the dashboard.";
+            Flight::render('error', ['message' => "AuthController->__construct(): " . $error]);
+        }
+        $user = $_SESSION['user'];
+        return $this->getUserBalance($user['user_id']);
     }
 }

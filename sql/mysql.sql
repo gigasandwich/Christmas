@@ -81,6 +81,8 @@ FROM
     christmas_user u
 LEFT JOIN
     christmas_move m ON u.user_id = m.user_id
+WHERE 
+    is_accepted = 1
 GROUP BY
     u.user_id;
 

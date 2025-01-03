@@ -1,74 +1,130 @@
 $(document).ready(function () {
+    // Show gifts after filling the form 
     $("#view-gifts").click(function (e) {
         e.preventDefault();
 
+        const girlCount = parseInt($("#girl").val(), 10) || 0;
+        const boyCount = parseInt($("#boy").val(), 10) || 0;
+
+        if (girlCount <= 0 && boyCount <= 0) {
+            alert("Please enter the number of boys or girls to suggest gifts for");
+            return;
+        }
+
+        fetchGiftSuggestions(girlCount, boyCount);
+    });
+
+    // Replace gifts
+    $('#gift-list').on('click', '.btn-primary', function (e) {
+        e.preventDefault();
+        const card = $(this).closest('.col-md-4');
+        const giftIndex = card.data('index');
+
+        replaceGift(card, giftIndex);
+    });
+
+    // Ajax 
+    function fetchGiftSuggestions(girls, boys) {
         $.ajax({
             url: '/api/gifts',
             type: 'GET',
-            beforeSend: function () {
-                $('#loading').show();
-            },
-            complete: function () {
-                $('#loading').hide();
-            },
+            data: { girls, boys },
             success: function (response) {
-                $('#gift-list .row').empty();
-
-                response.forEach(function (gift) {
-                    // <div class="card shadow-sm d-flex flex-column" style="height: 100%;"> makes sure all elements are on the same dimension
-                    let html = `
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow-sm d-flex flex-column" style="height: 100%;">
-                                <img src="/assets/img/gifts/${gift.pic}" class="card-img-top" alt="${gift.gift_name}" style="height: 200px; object-fit: cover;">
-                                <div class="card-body d-flex flex-column flex-grow-1">
-                                    <h5 class="card-title">${gift.gift_name}</h5>
-                                    <p class="card-text">${gift.description}</p>
-                                    <p class="card-text"><strong>Price:</strong> $${gift.price}</p>
-                                    <div class="mt-auto">
-                                        <a href="#" class="btn btn-primary w-100">Replace Gift</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    $('#gift-list .row').append(html);
-                });
+                console.log(response);
+                handleGiftSuggestions(response);
             },
             error: function () {
                 alert("Error fetching gifts.");
             }
         });
-    });
-});
+    }
 
+    function handleGiftSuggestions(response) {
+        const giftList = $('#gift-list .row');
+        giftList.empty();
 
-// For replacing 
-$('#gift-list').on('click', '.btn-primary', function (e) {
-    e.preventDefault();
-
-    const card = $(this).closest('.card');
-    const giftIndex = card.data('gift-index'); // Assuming each card has a data attribute for the index
-
-    $.ajax({
-        url: '/replace-gift',
-        method: 'POST',
-        data: { index: giftIndex },
-        success: function (response) {
-            if (response.error) {
-                alert(response.error);
-            } else {
-                const newGift = response.new_gift;
-
-                // Update the card with new gift details
-                card.find('.card-img-top').attr('src', '/assets/img/gifts/' + newGift.pic).attr('alt', newGift.gift_name);
-                card.find('.card-title').text(newGift.gift_name);
-                card.find('.card-text').first().text(newGift.description);
-                card.find('.card-text strong').next().text(`$${newGift.price}`);
-                card.data('gift-id', newGift.gift_id); // Update the gift ID
-            }
-        },
-        error: function () {
-            alert('Error replacing the gift. Please try again.');
+        if (!response || response.length === 0) {
+            giftList.append('<p class="text-center">No gifts available for the selected input.</p>');
+            return;
         }
-    });
+
+        response.forEach(gift => {
+            giftList.append(createGiftCard(gift));
+        });
+    }
+
+    function replaceGift(card, giftIndex) {
+        // Loading: so we put a sleep in the controller 
+        const btn = card.find('.btn-primary');
+        btn.text('Loading...').prop('disabled', true);
+
+        $.ajax({
+            url: '/api/replace-gift', // Consider using POST or PUT if modifying data
+            method: 'GET', // Consider PUT/POST for actual data modification
+            data: { index: giftIndex },
+            success: function (response) {
+                const newGift = response;
+
+                // Replace all gift attributes
+                card.find('.card-img-top')
+                    .attr('src', '/assets/img/gifts/' + newGift['pic'])
+                    .attr('alt', newGift['gift_name']);
+                card.find('.card-title').text(newGift['gift_name']);
+                card.find('.card-text').first().text(newGift['description']);
+                card.find('.card-text strong').next().text(`$${newGift['price']}`);
+                card.data('gift-id', newGift['gift_id']); 
+
+                // Reset the button text and enable it
+                btn.text('Replace Gift').prop('disabled', false);
+            },
+            error: function () {
+                alert('Error replacing the gift. Please try again.');
+                btn.text('Replace Gift').prop('disabled', false);
+            }
+        });
+    }
+
+    // Helper methods
+    function getCategoryIcon(categoryId) {
+        switch (categoryId) {
+            case 1:
+                return 'fa-venus';
+            case 2:
+                return 'fa-mars';
+            case 3:
+                return 'fa-genderless';
+            default:
+                return '';
+        }
+    }
+
+    function createGiftCard(gift) {
+        const categoryIcon = getCategoryIcon(gift['category_id']);
+        return `
+            <div class="col-md-4 mb-4" data-index=${gift['index']}>
+                <div class="card shadow-sm d-flex flex-column" style="height: 100%;">
+                    <div class="position-relative" style="height: 200px;">
+                        <img src="/assets/img/gifts/${gift['pic']}" class="card-img-top" alt="${gift['gift_name']}" style="height: 200px; object-fit: cover;">
+                        <div class="position-absolute bottom-0 start-0 p-2 text-white" style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                            <p class="m-0" style="font-size: 1.1em; font-weight: bold;">
+                                <i class="fas ${categoryIcon}"></i>
+                            </p>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 p-2 text-white" style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                            <p class="m-0" style="font-size: 1.1em;">
+                                <i class="fas fa-tag"></i> $${gift['price']}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column flex-grow-1">
+                        <h5 class="card-title">${gift['gift_name']}</h5>
+                        <p class="card-text">${gift['description']}</p>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-primary w-100">Replace Gift</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 });

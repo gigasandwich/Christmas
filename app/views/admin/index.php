@@ -19,10 +19,11 @@
                         <td><?= $deposit['date'] ?></td>
                         <td>
                             <div class="d-flex gap-3">
-                                <a href="/api/reject/deposit/<?= $deposit['move_id'] ?>" class="btn btn-outline-danger btn-sm w-50 reject-btn">
+                                <!-- deposit-id will be posted via ajax -->
+                                <a href="/api/reject/deposit/" class="btn btn-outline-danger btn-sm w-50 reject-btn" data-deposit-id="<?= $deposit['move_id'] ?>">
                                     <i class="fa fa-trash"></i> Reject
                                 </a>
-                                <a href="/api/accept/deposit/<?= $deposit['move_id'] ?>" class="btn btn-success btn-sm w-50 accept-btn">
+                                <a href="/api/accept/deposit/" class="btn btn-success btn-sm w-50 accept-btn" data-deposit-id="<?= $deposit['move_id'] ?>">
                                     <i class="fa fa-thumb"></i> Accept
                                 </a>
                             </div>

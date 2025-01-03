@@ -28,6 +28,5 @@ document.addEventListener('DOMContentLoaded', function () {
     if (header && main) {
         const headerHeight = header.offsetHeight;
         main.style.marginTop = `${headerHeight + 50}px`;
-        console.log(main.style.marginTop);
     }
 });

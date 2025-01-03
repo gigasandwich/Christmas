@@ -10,13 +10,7 @@ class AdminController {
     }
 
     public function showDashboard() {
-        $deposits = $this->moveModel->getNonAcceptedDeposits();
-        // Format the date and the money to look user friendly
-        $deposits = array_map(function($deposit){
-            $deposit['date'] = date('d-m-Y h:m:s', strtotime($deposit['date']));
-            return $deposit;
-        }, $deposits);
-
+        $deposits = $this->getNonAcceptedDeposits();
         $data = [
             'title' => 'Giftmas Admin Dashboard',
             'page' => 'index',
@@ -31,25 +25,25 @@ class AdminController {
         // Format the date and the money to look user friendly
         $deposits = array_map(function($deposit){
             $deposit['date'] = date('d-m-Y h:m:s', strtotime($deposit['date']));
+            $deposit['amount'] = number_format($deposit['amount'],2);
             return $deposit;
         }, $deposits);
-        
-        Flight::json($deposits);
+        return $deposits;        
     }
 
     // After changes, echo the rest of the deposits
-    public function acceptDeposit($deposit_id) {
+    public function acceptDeposit() {
+        $deposit_id = Flight::request()->data->deposit_id;
         $this->moveModel->acceptDeposit($deposit_id);
-        // if ($result) 
-        //     Flight::json(['status' => 'success', 'message' => 'Deposit accepted']);
-        // else 
-        //     Flight::json(['status' => 'error', 'message' => 'Failed to accept deposit']);
-        $this->getNonAcceptedDeposits();
+        $deposits = $this->getNonAcceptedDeposits();
+        Flight::json($deposits);
     }
 
-    public function rejectDeposit($deposit_id) {
+    public function rejectDeposit() {
+        $deposit_id = Flight::request()->data->deposit_id;
         $this->moveModel->rejectDeposit($deposit_id);
         $this->getNonAcceptedDeposits();
-
+        $deposits = $this->getNonAcceptedDeposits();
+        Flight::json($deposits);
     }
 }

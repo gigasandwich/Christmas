@@ -25,6 +25,7 @@
                 <a class="navbar-brand" href="/dashboard">
                     <?php include './layouts/logo.php'; ?>
                 </a>
+
                 <!-- Toggle Button for Mobile View -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +34,21 @@
 
                 <!-- Navbar Links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Start -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Home</a>
+                        </li>
+                        <!-- Smooth Scroll Link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#deposit-form">Make a deposit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/balance">Your balance</a>
+                        </li>
+                    </ul>
+
+                    <!-- End -->
                     <ul class="navbar-nav ms-auto d-flex gap-2 align-items-center">
                         <!-- Theme Switch Button -->
                         <li class="nav-item me-3">
@@ -45,6 +61,7 @@
                                 <i class="fas fa-cog"></i>
                             </button>
                         </li>
+                    </ul>
                 </div>
             </div>
         </nav>
