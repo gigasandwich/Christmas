@@ -6,4 +6,5 @@ composer.lock
 runway
 public/assets/img/*
 !public/assets/img/christmas
+!public/assets/img/gifts
 

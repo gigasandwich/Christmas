@@ -183,7 +183,7 @@ INSERT INTO christmas_gift (gift_name, category_id, price, description, stock_qu
 ('Book Set 2', 1, 45.00, 'A bundle of adventure novels.', 5, 'book6.jpg'),
 
 -- Toy Cars
-('Toy Car 1', 2, 15.99, 'Miniature toy car for kids.', 4, 'car1.jpg'),
+('Toy Cars 1', 2, 15.99, 'Miniature toys car for kids.', 4, 'car1.jpg'),
 ('Remote Car 1', 2, 45.99, 'Remote-controlled racing car.', 3, 'car2.jpg'),
 ('Remote Car 2', 2, 55.00, 'Advanced remote-controlled car.', 5, 'car3.jpg'),
 ('Toy Car 2', 2, 20.00, 'Pull-back toy car.', 6, 'car4.jpg'),

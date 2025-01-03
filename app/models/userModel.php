@@ -14,10 +14,9 @@ class userModel {
     }
 
     /**
-     * Summary of authentication methods
-     * @param string $username username in the database
-     * @param string $password password in the database
-     * @return array Associative array containing status - message and also the user
+     * ---------------------------
+     * Authentication 
+     * ---------------------------
      */
     public function authenticateUser($username, $password) {
         // Checking if the user already exist at first place
@@ -25,7 +24,7 @@ class userModel {
         $STH = $this->db->prepare($query);
         $STH->execute([$username]);
 
-        $user = $STH->fetch(PDO::FETCH_ASSOC); // Fetch we only need one row
+        $user = $STH->fetch(PDO::FETCH_ASSOC); // Fetch we only need: one row
         if(!$user) 
             return ['status' => 'error', 'message'=> 'User not found', 'user' => null];
 
@@ -75,5 +74,22 @@ class userModel {
             return ['status' => 'success', 'message' => 'Username removed'];
         
         return ['status' => 'error', 'message' => 'User doesn\'t exist'];
+    }
+
+    /**
+     * ---------------------------
+     * Moves 
+     * ---------------------------
+     */
+    public function getUserBalance($user_id) {
+        $query = "
+            SELECT current_balance 
+            FROM christmas_user_balance_view 
+            WHERE user_id = ?
+        ";
+        $STH = $this->db->prepare($query);
+        $STH->execute([$user_id]);
+        $row = $STH->fetch(PDO::FETCH_ASSOC); // Fetch we only need: one row
+        return $row['current_balance'] ?? 0;
     }
 }
