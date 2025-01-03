@@ -60,7 +60,6 @@ class userModel {
         $query = "INSERT INTO $this->table_name (username, password) VALUES (?, ?)"; // is_admin is by default 0 
         $STH = $this->db->prepare($query);
 
-
         if ($STH->execute([$username, $password])) 
             return ['status' => 'success', 'message' => 'New user registered'];
 

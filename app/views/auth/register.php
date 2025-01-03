@@ -51,7 +51,8 @@
                             <div class="px-3 py-4 p-md-5 mx-md-4 text-center">
                                 <h4 class="mb-4 fs-2 fw-bold lh-sm">Celebrate the Festive Spirit!</h4>
                                 <p class="mb-0 fs-5 text-opacity-75">
-                                    Welcome to Giftmas, the ultimate platform for spreading joy and love. Register now to start your holiday journey and explore exciting features!
+                                    Welcome to Giftmas, the ultimate platform for spreading joy and love. Register now
+                                    to start your holiday journey and explore exciting features!
                                 </p>
                             </div>
                         </div>

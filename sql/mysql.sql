@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS christmas_category;
 DROP TABLE IF EXISTS christmas_user;
 DROP VIEW IF EXISTS christmas_user_balance_view;
 DROP VIEW IF EXISTS christmas_user_deposits_view;
+DROP VIEW IF EXISTS christmas_non_accepted_user_deposits_view;
 DROP VIEW IF EXISTS christmas_user_withdrawals_view;
 
 -- ------------------------------
@@ -51,7 +52,8 @@ CREATE TABLE christmas_move (
     user_id INT,
     amount DECIMAL(10, 2) NOT NULL,  -- Positive = deposits, Negative = withdrawals
     description VARCHAR(255),
-    move_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_accepted INT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES christmas_user(user_id)
 );
 
@@ -90,9 +92,10 @@ SELECT
     u.user_id,
     u.username,
     m.move_id,
-    m.amount AS deposit_amount,
+    m.amount, 
     m.description,
-    m.move_date
+    m.date,
+    m.is_accepted
 FROM
     christmas_user u
 JOIN
@@ -100,6 +103,13 @@ JOIN
 WHERE
     m.amount > 0;
 
+CREATE VIEW christmas_non_accepted_user_deposits_view AS
+SELECT 
+    *
+FROM 
+    christmas_user_deposits_view
+WHERE 
+    is_accepted = 0;
 -- ------------------------------
 -- View for Withdrawals
 -- ------------------------------
@@ -108,9 +118,9 @@ SELECT
     u.user_id,
     u.username,
     m.move_id,
-    m.amount AS withdrawal_amount,
+    m.amount, 
     m.description,
-    m.move_date
+    m.date
 FROM
     christmas_user u
 JOIN
@@ -130,6 +140,15 @@ INSERT INTO christmas_category (category_name) VALUES
 ('girl'),
 ('boy'),
 ('neutral');
+
+INSERT INTO christmas_move (user_id, amount, description, date) VALUES
+(2, 50, 'Deposit', '2024-12-2'),
+(2, 100, 'Deposit', '2024-12-5'),
+(2, 150, 'Deposit', '2024-12-7'),
+(2, 175, 'Deposit', '2024-12-9'),
+(2, 200, 'Deposit', '2024-12-20'),
+(2, 300, 'Deposit', '2024-12-21'),
+(2, 300, 'Deposit', '2024-12-25');
 
 
 INSERT INTO christmas_gift (gift_name, category_id, price, description, stock_quantity, pic) VALUES

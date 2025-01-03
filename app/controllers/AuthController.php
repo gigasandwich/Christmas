@@ -6,7 +6,7 @@ use Flight;
 class AuthController {
     protected $userModel;
     public function __construct() { 
-        $this->userModel = Flight::userModel(); // That variable of Flight has been created in service.phpp
+        $this->userModel = Flight::userModel(); // That variable of Flight has been created in service.php
     }
 
     /**

@@ -4,7 +4,11 @@ namespace App\Controllers;
 use Flight;
 
 class DashboardController {
+    protected $giftModel;
+
     public function __construct() { 
+        $this->giftModel = Flight::giftModel(); 
+
         if (!isset($_SESSION['user'])) {
             $error = "You must be logged in to access the dashboard.";
             Flight::render('error', ['message' => "AuthController->__construct(): " . $error]);
@@ -30,5 +34,16 @@ class DashboardController {
             'page' => 'balance' 
         ];
         Flight::render('dashboard/template', $data);
+    }
+
+    /**
+     * ---------------------------
+     * Gift interaction
+     * ---------------------------
+     */
+
+    public function getGifts() {
+        $gifts = $this->giftModel->getAllGifts();
+        Flight::json($gifts);
     }
 }

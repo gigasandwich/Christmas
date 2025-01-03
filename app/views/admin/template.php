@@ -10,14 +10,10 @@
     <link rel="stylesheet" href="/assets/framework/fontawesome-free-6.7.2-web/css/all.min.css">
     <!-- Custom css -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
-    <link rel="stylesheet" href="/assets/css/loading.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 
 <body>
-    <!-- Loading animation -->
-    <?php include './layouts/loading.php' ?>
-
     <header class="fixed-top shadow">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
@@ -58,10 +54,10 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/user">Login in another account</a>
+                        <a class="nav-link" href="/auth/user">Login in an user account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/admin">Login as admin</a>
+                        <a class="nav-link" href="/auth/admin">Login as another admin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/auth/logout">Logout</a>
@@ -82,19 +78,7 @@
     <script src="/assets/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Scripts -->
     <script src="/assets/js/theme.js"></script>
-    <script src="/assets/js/gift.js"></script>
-    <!-- Loading animation -->
-    <script>
-        <?php if (isset($_SESSION['loading']) && $_SESSION['loading'] === true): ?>
-            document.querySelector('#loading').style.display = 'flex';
-            document.querySelector('main').style.display = 'none';
-            setTimeout(function () {
-                document.querySelector('#loading').style.display = 'none';
-                document.querySelector('main').style.display = 'block';
-            }, 2500);
-        <?php endif; ?>
-        <?php unset($_SESSION['loading']); ?>
-    </script>
+    <script src="/assets/js/admin.js"></script>
 </body>
 
 </html>

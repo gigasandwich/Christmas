@@ -37,7 +37,7 @@
 - [x] **Set up project structure**
   - Create folders for `routes`, `controllers`, and `models`.
 
-- [ ] **Routes**
+- [x] **Routes**
   - Define routes for:
     - User authentication (login, registration).
     - Main page for selecting gifts and depositing money.
@@ -51,7 +51,7 @@
 - [ ] **Models**
   - Create `UserModel` for user authentication and data management.
   - Create `GiftModel` for handling gift data (e.g., gift categories, costs).
-  - Create `DepositModel` for managing user deposits.
+  - Create `MoveModel` for managing user deposits.
 
 - [x] **User Authentication**
   - Implement secure user login and registration logic.
@@ -71,6 +71,6 @@
 
 - **Bootstrap**: For front-end styling (locally hosted CSS and JS).
 - **jQuery**: For front-end dynamic behavior (locally hosted).
-- **MySQL**: For database handling (users, gifts, and deposits).
+- **MySQL**: For database handling (users, gifts, and moves).
 
 ---

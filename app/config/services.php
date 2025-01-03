@@ -34,3 +34,11 @@ Flight::map('dbName', function () {
 Flight::map('userModel', function () {
     return new App\Models\UserModel(Flight::db()); // So we don't have to use/include everytime
 });
+
+Flight::map('giftModel', function () {
+    return new App\Models\GiftModel(Flight::db());
+});
+
+Flight::map('moveModel', function () {
+    return new App\Models\MoveModel(Flight::db());
+});

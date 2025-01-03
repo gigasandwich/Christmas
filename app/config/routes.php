@@ -1,6 +1,7 @@
 <?php
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
+use App\Controllers\AdminController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -13,27 +14,44 @@ use flight\net\Router;
 
 session_start();
 
-$router->get("/", function (){
+$router->get('/', function (){
     Flight::render('landing/index');
 });
 
+// Auth
 $router->group('/auth', function () use ($router, $app) {
-    $router->get("/", [AuthController::class, 'showUserLogin']); 
+    $router->get('/', [AuthController::class, 'showUserLogin']); 
 
     $router->get('/user', [AuthController::class,'showUserLogin']); // Mihiditra page
-    $router->post("/check-user", [AuthController::class, 'userLogin']); // Login tena login
+    $router->post('/check-user', [AuthController::class, 'userLogin']); // Login tena login
 
-    $router->get("/admin", [AuthController::class, 'showAdminLogin']);
-    $router->post("/check-admin", [AuthController::class, 'adminLogin']);
+    $router->get('/admin', [AuthController::class, 'showAdminLogin']);
+    $router->post('/check-admin', [AuthController::class, 'adminLogin']);
 
 
-    $router->get("/register", [AuthController::class, 'showRegistration']);
-    $router->post("/create-user", [AuthController::class, 'register']);    
+    $router->get('/register', [AuthController::class, 'showRegistration']);
+    $router->post('/create-user', [AuthController::class, 'register']);    
 
-    $router->get("/logout", [AuthController::class,"logout"]);
+    $router->get('/logout', [AuthController::class,'logout']);
 });
 
-$router->group("/dashboard", function () use ($router, $app) {
-    $router->get("/", [DashboardController::class,"showDashboard"]);
-    $router->get("/balance", [DashboardController::class,"showBalance"]);
+// Dashboard
+$router->group('/dashboard', function () use ($router, $app) {
+    $router->get('/', [DashboardController::class,'showDashboard']);
+    $router->get('/balance', [DashboardController::class,'showBalance']);
+});
+
+// Admin
+$router->group('/admin', function () use ($router, $app) {
+    $router->get('/', [AdminController::class,'showDashboard']);
+});
+
+// Ajax calls
+$router->group('/api', function () use ($router, $app) {
+    $router->get('/gifts', [DashboardController::class, 'getGifts']);
+
+    // Deposits
+    $router->get('/accept/deposit/@deposit_id', [AdminController::class, 'acceptDeposit']);
+    $router->get('/reject/deposit/@deposit_id', [AdminController::class, 'rejectDeposit']);
+
 });
