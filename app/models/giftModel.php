@@ -196,8 +196,12 @@ class GiftModel
 
         // Too lazy to do prepare and exec
         foreach ($suggestions as $gift) {
+            $gift_id = $gift['gift_id'];
+            $stock_quantity = $gift['stock_quantity']--;
             // Add gifts to user
-            $this->db->query("INSERT INTO christmas_gift_transaction (user_id, gift_id) VALUES ($userId, {$gift['gift_id']})");
+            $this->db->query("INSERT INTO christmas_gift_transaction (user_id, gift_id) VALUES ($userId, $gift_id)");
+            // Decrease the amount of gift 
+            $this->db->query("UPDATE christmas_gift SET stock_quantity = $stock_quantity WHERE gift_id = $gift_id");
         }
         // Retrieve money from the user
         $totalPrice = $this->calculateTotalPrice($suggestions);
