@@ -27,10 +27,6 @@ $app->register('db', $pdoClass, [ $dsn, $config['database']['user'] ?? null, $co
 // Redis? This is where you'd set that up
 // $app->register('redis', Redis::class, [ $config['redis']['host'], $config['redis']['port'] ]);
 
-Flight::map('dbName', function () {
-    return "christmas";
-});
-
 Flight::map('userModel', function () {
     return new App\Models\UserModel(Flight::db()); // So we don't have to use/include everytime
 });

@@ -10,7 +10,6 @@ class userModel {
 
     public function __construct(PDO $db) {
         $this->db = $db;
-        $this->table_name = Flight::dbName() . "_user"; // Because table_name might change :)
     }
 
     /**
@@ -20,7 +19,7 @@ class userModel {
      */
     public function authenticateUser($username, $password) {
         // Checking if the user already exist at first place
-        $query = "SELECT * FROM $this->table_name WHERE username = ? LIMIT 1";
+        $query = "SELECT * FROM christmas_user WHERE username = ? LIMIT 1";
         $STH = $this->db->prepare($query);
         $STH->execute([$username]);
 
@@ -48,7 +47,7 @@ class userModel {
 
     public function addUser($username, $password) {
         // Check if that user already exist
-        $query = "SELECT * FROM $this->table_name WHERE username = ? LIMIT 1";
+        $query = "SELECT * FROM christmas_user WHERE username = ? LIMIT 1";
         $STH = $this->db->prepare($query);
         $STH->execute([$username]);
         
@@ -56,7 +55,7 @@ class userModel {
             return ['status' => 'error', 'message' => 'Username already exists'];
 
         // Insert 
-        $query = "INSERT INTO $this->table_name (username, password) VALUES (?, ?)"; // is_admin is by default 0 
+        $query = "INSERT INTO christmas_user (username, password) VALUES (?, ?)"; // is_admin is by default 0 
         $STH = $this->db->prepare($query);
 
         if ($STH->execute([$username, $password])) 
@@ -66,7 +65,7 @@ class userModel {
     }
 
     public function removeUser($username, $password) {
-        $query = "SELECT * FROM $this->table_name WHERE username = ? LIMIT 1";
+        $query = "SELECT * FROM christmas_user WHERE username = ? LIMIT 1";
         $STH = $this->db->prepare($query);
         $STH->execute([$username]);
         
