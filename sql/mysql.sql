@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS christmas_move;
 DROP TABLE IF EXISTS christmas_gift;
 DROP TABLE IF EXISTS christmas_category;
 DROP TABLE IF EXISTS christmas_user;
+
 DROP VIEW IF EXISTS christmas_user_balance_view;
 DROP VIEW IF EXISTS christmas_deposits_view;
 DROP VIEW IF EXISTS christmas_non_accepted_deposits_view;
@@ -66,6 +67,7 @@ CREATE TABLE christmas_gift_transaction (
     user_id INT,
     gift_id INT,
     quantity INT,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES christmas_user(user_id),
     FOREIGN KEY (gift_id) REFERENCES christmas_gift(gift_id)
 );
@@ -110,9 +112,9 @@ CREATE VIEW christmas_accepted_deposits_view AS
 SELECT 
     *
 FROM 
-    christmas_user_deposits_view
+    christmas_deposits_view
 WHERE 
-    is_accepted = 0;
+    is_accepted = 1;
 
 -- ------------------------------
 -- INSERT INTO STATEMENTS
@@ -122,10 +124,10 @@ INSERT INTO christmas_user (username, password, is_admin) VALUES
 ('poyz', '123', 1),
 ('giga', '123', 0);
 
-INSERT INTO christmas_category (category_name) VALUES
-('girl'),
-('boy'),
-('neutral');
+INSERT INTO christmas_category (category_id, category_name) VALUES
+(1, 'girl'),
+(2, 'boy'),
+(3, 'neutral');
 
 INSERT INTO christmas_move (user_id, amount, description, date) VALUES
 (2, 50, 'Deposit', '2024-12-2'),
