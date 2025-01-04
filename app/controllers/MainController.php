@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use Flight;
 
-class DashboardController
+class MainController
 {
     protected $giftModel;
     protected $userModel;
@@ -25,7 +25,7 @@ class DashboardController
      * Page rendering methods
      * ---------------------------
      */
-    public function showDashboard($message = "")
+    public function renderMainPage($message = "")
     {
         $data = [
             'title' => 'Dashboard',
@@ -34,10 +34,10 @@ class DashboardController
             'username' => $this->user['username'],
             'message' => $message
         ];
-        Flight::render('dashboard/template', $data);
+        Flight::render('main/template', $data);
     }
 
-    public function showAccount($message = "")
+    public function renderAccountPage($message = "")
     {
         $userId = $this->user['user_id'];
         $data = [
@@ -48,7 +48,7 @@ class DashboardController
             'username' => $this->user['username'],
             'message' => $message
         ];
-        Flight::render('dashboard/template', $data);
+        Flight::render('main/template', $data);
     }
 
     /**
@@ -101,7 +101,7 @@ class DashboardController
         if ($result)
             unset($_SESSION['gift_suggestions']);
 
-        $this->showDashboard('Gift purchase successfully validated!');
+        $this->renderMainPage('Gift purchase successfully validated!');
     }
     
     // Total price of the suggestion

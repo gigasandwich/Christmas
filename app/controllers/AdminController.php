@@ -12,7 +12,7 @@ class AdminController {
         $this->user = $_SESSION['user'];
     }
 
-    public function showDashboard() {
+    public function renderDashboard() {
         $deposits = $this->getNonAcceptedDeposits();
         $data = [
             'title' => 'Giftmas Admin Dashboard',

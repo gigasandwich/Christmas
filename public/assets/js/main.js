@@ -1,3 +1,4 @@
+// This main file is for each view, not only for the view main  
 // Theme toggling
 $(document).ready(function () {
     const $html = $('html');

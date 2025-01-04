@@ -33,7 +33,7 @@
                 <button class="btn btn-outline-secondary w-100" id="total-price-button" data-total-price="0">0$</button>
             </div>
             <div class="col-md-7">
-                <form action="/dashboard/validate-gifts" method="POST" id="validationForm">
+                <form action="/main/validate-gifts" method="POST" id="validationForm">
                     <!-- Hidden Inputs -->
                     <input type="hidden" name="total_price" id="totalPriceInput" value="">
                     <input type="hidden" name="remaining_balance" id="remainingBalanceInput" value="">

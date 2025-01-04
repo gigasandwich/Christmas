@@ -14,7 +14,7 @@ class AuthController {
      * Page rendering methods
      * ---------------------------
      */
-    public function showUserLogin() {
+    public function renderUserLogin() {
         $data = [
             'title' => 'Giftmas login',
             'page' => 'user' // Not auth/user because the template file is already in auth folder
@@ -22,7 +22,7 @@ class AuthController {
         Flight::render('auth/template', $data);
     }
 
-    public function showAdminLogin() {
+    public function renderAdminLogin() {
         $data = [
             'title' => 'Giftmas admin login',
             'page' => 'admin' 
@@ -30,7 +30,7 @@ class AuthController {
         Flight::render('auth/template', $data);
     }
     
-    public function showRegistration() {
+    public function renderRegistration() {
         $data = [
             'title' => 'Giftmas registration',
             'page' => 'register' 
@@ -57,7 +57,7 @@ class AuthController {
                 // Session is started at routes.php
                 $_SESSION['user'] = $result['user'];
                 $_SESSION['loading'] = true;
-                Flight::redirect('/dashboard');
+                Flight::redirect('/main');
             } else {
                 $data = ['page' => 'user', 'message' => "Invalid username or password."]; // Message is not the one from the model, because it's more convenient to do this
                 Flight::render('auth/template', $data);

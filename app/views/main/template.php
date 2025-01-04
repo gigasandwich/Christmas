@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? "Dashboard" ?></title>
+    <title><?= $title ?? "Main" ?></title>
     <!-- Framework css -->
     <link rel="stylesheet" href="/assets/framework/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/framework/fontawesome-free-6.7.2-web/css/all.min.css">
     <!-- Custom css -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/account.css">
     <link rel="stylesheet" href="/assets/css/loading.css">
 </head>
@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="/dashboard">
+                <a class="navbar-brand" href="/main">
                     <?php include './layouts/logo.php'; ?>
                 </a>
 
@@ -38,14 +38,14 @@
                     <!-- Start -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">Home</a>
+                            <a class="nav-link" href="/main">Home</a>
                         </li>
                         <!-- Smooth Scroll Link -->
                         <li class="nav-item">
                             <a class="nav-link" href="#deposit-form">Make a deposit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/account">Your account</a>
+                            <a class="nav-link" href="/main/account">Your account</a>
                         </li>
                     </ul>
 
@@ -127,7 +127,7 @@
     <script src="/assets/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Scripts -->
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/dashboard.js"></script>
+    <script src="/assets/js/gift.js"></script>
     <script src="/assets/js/account.js"></script>
     <script src="/assets/js/deposit.js"></script>
     <!-- Loading animation, not to use jquery for these -->
