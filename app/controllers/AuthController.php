@@ -111,7 +111,7 @@ class AuthController {
                 $data = ['page' => 'user', 'message' => 'User created.'];
                 Flight::render('auth/template', $data);
             } else {
-                $data = ['page' => 'sign-up', 'message' => $result['message']];
+                $data = ['page' => 'register', 'message' => $result['message']];
                 Flight::render('auth/template', $data);
             }
         } catch (\Exception $e) {
