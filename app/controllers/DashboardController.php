@@ -25,22 +25,28 @@ class DashboardController
      * Page rendering methods
      * ---------------------------
      */
-    public function showDashboard()
+    public function showDashboard($message = "")
     {
         $data = [
             'title' => 'Dashboard',
             'page' => 'index',
-            'balance' => $this->userModel->getActualUserBalance()
+            'balance' => $this->userModel->getActualUserBalance(),
+            'username' => $this->user['username'],
+            'message' => $message
         ];
         Flight::render('dashboard/template', $data);
     }
 
-    public function showAccount()
+    public function showAccount($message = "")
     {
+        $userId = $this->user['user_id'];
         $data = [
             'title' => 'Dashboard',
             'page' => 'account',
-            'balance' => $this->userModel->getActualUserBalance()
+            'balance' => $this->userModel->getActualUserBalance(),
+            'purchasedGifts' => $this->giftModel->getPurchasedGifts($userId),
+            'username' => $this->user['username'],
+            'message' => $message
         ];
         Flight::render('dashboard/template', $data);
     }
@@ -53,14 +59,21 @@ class DashboardController
 
     public function getGifts()
     {
+        $balance = $this->userModel->getActualUserBalance();
+        if(!$this->giftModel->canBuyGift($balance)) {
+            Flight::json(['error' => true, 'message' => 'You don\'t have enough money'], 400);
+            return;
+        }
         // query for GET and data for POST 😭
         $data = Flight::request()->query;
         $boys = $data->boys;
         $girls = $data->girls;
 
         $gifts = $this->giftModel->getGiftSuggestions($boys, $girls);
-        $totalPrice = $this->giftModel->getTotalPrice();
-        // $gifts = $this->giftModel->getAllGifts(); // Uncomment For display testing 
+
+        $_SESSION['gift_suggestions'] = $gifts; // This will be used everytime from now
+
+        $totalPrice = $this->getTotalPrice();
         Flight::json([
             'gifts' => $gifts,
             'total_price' => $totalPrice
@@ -71,28 +84,50 @@ class DashboardController
     {
         $data = Flight::request()->query;
         $index = $data->index;
-        $totalPrice = $this->giftModel->getTotalPrice();
         sleep(1);
-        if ($newGift = $this->giftModel->replaceGift($index))
+        if ($newGift = $this->giftModel->replaceGift($index, $_SESSION['gift_suggestions'])){
+            $totalPrice = $this->getTotalPrice();
             Flight::json(['new_gift' => $newGift, 'total_price' => $totalPrice]);
+        }
         else
             Flight::json(['error' => 'No gift index provided'], 400);
     }
 
+
     public function validateGifts()
     {
-        $userId = $_SESSION['user']['user_id'];
+        $userId = $this->user['user_id'];
         $result = $this->giftModel->finalizeSelections($userId, $_SESSION['gift_suggestions']);
-        if($result)
+        if ($result)
             unset($_SESSION['gift_suggestions']);
-            // Show dashboard + message
-            $data = [
-                'title' => 'Dashboard',
-                'page' => 'index',
-                'balance' => $this->userModel->getActualUserBalance(),
-                'message' => 'Gift purchase successfully validated!'
-            ];
-            Flight::render('dashboard/template', $data);
+
+        $this->showDashboard('Gift purchase successfully validated!');
     }
+    
+    // Total price of the suggestion
+    public function getTotalPrice()
+    {
+        return $this->giftModel->calculateTotalPrice($_SESSION['gift_suggestions']);
+    }
+
+    /**
+     * ---------------------------
+     * Account interaction
+     * ---------------------------
+     */
+    public function getAccountOverview()
+    {
+        $userId = $this->user['user_id'];
+        $purchasedGifts = $this->giftModel->getPurchasedGifts($userId);
+
+        // Fetch the user's deposits
+        $deposits = $this->userModel->getUserDeposits($userId);
+
+        return [
+            'purchasedGifts' => $purchasedGifts,
+            'deposits' => $deposits
+        ];
+    }
+
 
 }

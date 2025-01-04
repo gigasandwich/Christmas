@@ -30,6 +30,10 @@
                 <!-- Navbar Links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex gap-2 align-items-center">
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <i class="fas fa-user text-primary me-2"></i>
+                            <span class="fw-bold text-primary"> <?= $username ?></span>
+                        </li>
                         <!-- Theme Switch Button -->
                         <li class="nav-item me-3">
                             <?php include './layouts/btn-theme.php'; ?>
@@ -77,7 +81,7 @@
     <script src="/assets/framework/js/jquery-3.7.1.min.js"></script>
     <script src="/assets/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Scripts -->
-    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/main.js"></script>
     <script src="/assets/js/admin.js"></script>
 </body>
 

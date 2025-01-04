@@ -14,12 +14,12 @@
                                     <p class="lead">Enter your admin credentials to access the portal</p>
                                     <div class="form-floating mb-3 mt-3">
                                         <input type="text" class="form-control" id="username"
-                                            placeholder="Enter admin username" name="username">
+                                            placeholder="Enter admin username" name="username" value="poyz">
                                         <label for="username">Username</label>
                                     </div>
                                     <div class="form-floating mt-3 mb-3">
                                         <input type="password" class="form-control" id="password"
-                                            placeholder="Enter admin password" name="password">
+                                            placeholder="Enter admin password" name="password" value="123">
                                         <label for="password">Password</label>
                                     </div>
                                     <!-- Error message display -->
@@ -31,7 +31,7 @@
                                     <div class="text-center pt-1 mb-3 pb-1">
                                         <button class="btn btn-danger btn-block fa-lg gradient-custom-2 w-75 mb-3">
                                             Log in
-                                        </button>
+                                        </button>   
                                     </div>
                                 </form>
                             </div>

@@ -114,7 +114,7 @@
     <script src="/assets/framework/js/jquery-3.7.1.min.js"></script>
     <script src="/assets/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Scripts -->
-    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 
 </html>

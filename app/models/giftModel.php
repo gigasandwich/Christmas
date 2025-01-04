@@ -14,7 +14,12 @@ class GiftModel
     $this->db = $db;
   }
 
-  public function getAllGifts()
+  /**
+   * ---------------------------
+   * SELECT statement
+   * ---------------------------
+   */
+  public function getAvailableGifts()
   {
     $query = "SELECT 
                 * -- g.gift_id, g.gift_name, g.price, g.description, g.stock_quantity, g.pic, c.category_name 
@@ -23,12 +28,39 @@ class GiftModel
               LEFT JOIN 
                   christmas_category c 
               ON 
-                  g.category_id = c.category_id";
+                  g.category_id = c.category_id
+              WHERE 
+                  g.stock_quantity > 0    
+                  ";
     $STH = $this->db->prepare($query);
     $STH->execute();
     return $STH->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  // Purchased gifts by an user
+  public function getPurchasedGifts($userId)
+  {
+    $query = "
+        SELECT 
+            g.gift_id, g.gift_name, g.price, g.description, g.pic, t.quantity
+        FROM
+            christmas_gift_transaction t
+        JOIN
+            christmas_gift g ON t.gift_id = g.gift_id
+        WHERE
+            t.user_id = :userId
+    ";
+
+    $STH = Flight::db()->prepare($query);
+    $STH->execute(['userId' => $userId]);
+    return $STH->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * ---------------------------
+   * Used by the DashboardController
+   * ---------------------------
+   */
   public function getGiftSuggestions($boys, $girls)
   {
     $balance = Flight::userModel()->getActualUserBalance();
@@ -75,14 +107,12 @@ class GiftModel
       }
     }
 
-    // Add an index column and store with sesssion to make it replacable after
+    // Add column INDEX and store with sesssion to make it replacable after
     $i = 0;
     $suggestions = array_map(function ($suggestion) use (&$i) {
       $suggestion['index'] = $i++;
       return $suggestion;
     }, $suggestions);
-
-    $_SESSION['gift_suggestions'] = $suggestions;
 
     return $suggestions;
   }
@@ -104,14 +134,19 @@ class GiftModel
     return $STH->fetch(PDO::FETCH_ASSOC);
   }
 
-  public function replaceGift($index)
+  /**
+   * ---------------------------
+   * Proper operations
+   * ---------------------------
+   */
+
+  public function replaceGift($index, &$suggestions)// Adress so that the session can also change
   {
-    $suggestions = $_SESSION['gift_suggestions'];
     $oldGift = $suggestions[$index];
     $categoryId = $oldGift['category_id'];
 
     // Calculate the remaining balance and total amount
-    $balanceData = $this->getRemainingBalanceAndTotal();
+    $balanceData = $this->getRemainingBalanceAndTotal($suggestions);
     $remainingBalance = $balanceData['remaining_balance'];
 
     // Fetch a new gift in the same category and within the remaining balance
@@ -130,17 +165,14 @@ class GiftModel
       return ['error' => 'No suitable replacement gift found'];
     }
 
-    // Replace the old gift
     $suggestions[$index] = $newGift;
-    $_SESSION['gift_suggestions'] = $suggestions;
+    $newGift['index'] = $index; // Add the column index to the new gift
 
     return $newGift;
   }
 
-  public function getRemainingBalanceAndTotal()
+  public function getRemainingBalanceAndTotal($suggestions)
   {
-    $suggestions = $_SESSION['gift_suggestions'] ?? null;
-
     $totalAmount = 0;
 
     foreach ($suggestions as $gift) {
@@ -158,14 +190,14 @@ class GiftModel
   // The final thing to do
   public function finalizeSelections($userId, $suggestions)
   {
-    
+
     // Too lazy to do prepare and exec
     foreach ($suggestions as $gift) {
       // Add gifts to user
       $this->db->query("INSERT INTO christmas_gift_transaction (user_id, gift_id) VALUES ($userId, {$gift['gift_id']})");
     }
     // Retrieve money from the user
-    $totalPrice = $this->getTotalPrice();
+    $totalPrice = $this->calculateTotalPrice($suggestions);
     $this->db->query("INSERT INTO christmas_move (user_id, amount, description, is_accepted) VALUES ($userId, -$totalPrice, 'Payment', 1)");
 
     return true;
@@ -182,9 +214,30 @@ class GiftModel
     return number_format($totalPrice, 2);
   }
 
-  public function getTotalPrice()
+
+  /**
+   * ---------------------------
+   * Check methods operations
+   * ---------------------------
+   */
+  public function canBuyGift($balance)
   {
-    return $this->calculateTotalPrice($_SESSION['gift_suggestions']);
+    $query = "
+        SELECT MIN(price) as min_price
+        FROM christmas_gift
+        WHERE stock_quantity > 0
+    ";
+
+    $STH = $this->db->query($query);
+    $result = $STH->fetch(PDO::FETCH_ASSOC);
+
+    $minPrice = $result['min_price'] ?? null;
+
+    if (is_null($minPrice) || $balance < $minPrice) {
+      return false;
+    }
+
+    return true;
   }
 
 

@@ -21,7 +21,7 @@ $router->get('/', function (){
 });
 
 // Auth
-$router->group('/auth', function () use ($router, $app) {
+$router->group('/auth', function () use ($router) {
     $router->get('/', [AuthController::class, 'showUserLogin']); 
 
     $router->get('/user', [AuthController::class,'showUserLogin']); // Mihiditra page
@@ -38,19 +38,19 @@ $router->group('/auth', function () use ($router, $app) {
 });
 
 // Dashboard
-$router->group('/dashboard', function () use ($router, $app) {
+$router->group('/dashboard', function () use ($router) {
     $router->get('/', [DashboardController::class,'showDashboard']);
-    $router->get('/balance', [DashboardController::class,'showBalance']);
+    $router->get('/account', [DashboardController::class,'showACcount']);
     $router->post('/validate-gifts', [DashboardController::class,'validateGifts']);
 });
 
 // Admin
-$router->group('/admin', function () use ($router, $app) {
+$router->group('/admin', function () use ($router) {
     $router->get('/', [AdminController::class,'showDashboard']);
 });
 
 // Ajax calls
-$router->group('/api', function () use ($router, $app) {
+$router->group('/api', function () use ($router) {
     $router->get('/gifts', [DashboardController::class, 'getGifts']);
 
     // Deposits

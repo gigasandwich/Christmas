@@ -14,13 +14,13 @@
     - **JS**: Custom js.
     - **Images**: Logos and gift images.
 
-- [ ] **User Interface Design**
+- [x] **User Interface Design**
   - Design the landing page using Bootstrap components (e.g., hero section, buttons for login/signup).
   - Design the login and registration forms.
   - Create a user dashboard with gift selection and deposit options.
   - Design the admin panel interface for deposit validation.
 
-- [ ] **Frontend Interactions**
+- [x] **Frontend Interactions**
   - Use jQuery for dynamic page elements (e.g., interactive gift selection, AJAX calls).
   - Use Bootstrap for form validation, modals, and alerts.
   - Implement responsive design for mobile users.
@@ -48,7 +48,7 @@
   - Create `MainController` for managing gift selection, deposits, and user-related actions.
   - Create `AdminController` for admin login and deposit validation.
 
-- [ ] **Models**
+- [x] **Models**
   - Create `UserModel` for user authentication and data management.
   - Create `GiftModel` for handling gift data (e.g., gift categories, costs).
   - Create `MoveModel` for managing user deposits.
@@ -57,11 +57,11 @@
   - Implement secure user login and registration logic.
   - Use session management for authentication.
 
-- [ ] **Deposit Management**
+- [x] **Deposit Management**
   - Create functionality to allow users to deposit money into their accounts.
   - Implement the admin panel route to validate deposits.
 
-- [ ] **Gift Selection Logic**
+- [x] **Gift Selection Logic**
   - Create an algorithm to suggest gifts based on user input (e.g., number of children, gender).
   - Implement logic for validating and replacing suggested gifts.
 

@@ -6,10 +6,10 @@ $('#deposit-btn').on('click', (e) => {
         type: 'POST',
         data: { amount },
         success: function (response) {
-            alert("Error: " + response);
+            showModalMessage(response);
         }, 
         error: function (response) {
-            alert("Error:" + response);
+            showModalMessage("Error:" + response);
         }
     });
 });

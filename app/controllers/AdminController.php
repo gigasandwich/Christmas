@@ -5,8 +5,11 @@ use Flight;
 
 class AdminController {
     protected $moveModel;
+    protected $user;
+    
     public function __construct() { 
         $this->moveModel = Flight::moveModel();
+        $this->user = $_SESSION['user'];
     }
 
     public function showDashboard() {
@@ -14,6 +17,7 @@ class AdminController {
         $data = [
             'title' => 'Giftmas Admin Dashboard',
             'page' => 'index',
+            'username' => $this->user['username'],
             'deposits' => $deposits
         ];
         Flight::render('admin/template', $data);

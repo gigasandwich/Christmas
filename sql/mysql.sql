@@ -74,9 +74,7 @@ CREATE TABLE christmas_gift_transaction (
 -- ------------------------------
 CREATE VIEW christmas_user_balance_view AS
 SELECT
-    u.user_id,
-    u.username,
-    COALESCE(SUM(m.amount), 0) AS current_balance
+    u.user_id, u.username, COALESCE(SUM(m.amount), 0) AS current_balance
 FROM
     christmas_user u
 LEFT JOIN
@@ -91,13 +89,7 @@ GROUP BY
 -- ------------------------------
 CREATE VIEW christmas_user_deposits_view AS
 SELECT
-    u.user_id,
-    u.username,
-    m.move_id,
-    m.amount, 
-    m.description,
-    m.date,
-    m.is_accepted
+    u.user_id, u.username, m.move_id, m.amount,  m.description, m.date, m.is_accepted
 FROM
     christmas_user u
 JOIN
@@ -117,18 +109,27 @@ WHERE
 -- ------------------------------
 CREATE VIEW christmas_user_withdrawals_view AS
 SELECT
-    u.user_id,
-    u.username,
-    m.move_id,
-    m.amount, 
-    m.description,
-    m.date
+    u.user_id, u.username, m.move_id, m.amount,  m.description, m.date
 FROM
     christmas_user u
 JOIN
     christmas_move m ON u.user_id = m.user_id
 WHERE
     m.amount < 0;
+
+-- ------------------------------
+-- View for the bought gifts
+-- ------------------------------
+CREATE VIEW christmas_gift_transaction_view AS
+SELECT  g.gift_id, g.gift_name, g.category_id, g.price, g.description, g.stock_quantity, g.pic, t.transaction_id, t.user_id, t.quantity
+FROM 
+    christmas_gift_transaction t
+JOIN 
+    christmas_gift g
+ON 
+    t.gift_id = g.gift_id
+GROUP BY
+    t.user_id;
 
 -- ------------------------------
 -- INSERT INTO STATEMENTS

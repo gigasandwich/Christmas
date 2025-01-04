@@ -30,3 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
         main.style.marginTop = `${headerHeight + 50}px`;
     }
 });
+
+// Used in other scripts
+function showModalMessage(message) {
+    const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+    document.querySelector('#messageModal .modal-body p').textContent = message;
+    messageModal.show();
+}

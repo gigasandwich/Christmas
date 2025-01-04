@@ -11,6 +11,7 @@
     <!-- Custom css -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/account.css">
     <link rel="stylesheet" href="/assets/css/loading.css">
 </head>
 
@@ -44,15 +45,21 @@
                             <a class="nav-link" href="#deposit-form">Make a deposit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/account">Your account</a>
+                            <a class="nav-link" href="/dashboard/account">Your account</a>
                         </li>
                     </ul>
 
                     <!-- End -->
                     <ul class="navbar-nav ms-auto d-flex gap-2 align-items-center">
+                        <!-- Username and balance -->
+                        <li class="nav-item d-flex align-items-center">
+                            <i class="fas fa-user text-primary me-2"></i>
+                            <span class="fw-bold text-primary"> <?= $username ?></span>
+                        </li>
                         <li class="nav-item me-3" id="balance" value="<?= "$balance" ?>">
                             <?= "$$balance" ?>
                         </li>
+                        
                         <!-- Theme Switch Button -->
                         <li class="nav-item me-3">
                             <?php include './layouts/btn-theme.php'; ?>
@@ -119,10 +126,10 @@
     <script src="/assets/framework/js/jquery-3.7.1.min.js"></script>
     <script src="/assets/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Custom Scripts -->
-    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
     <script src="/assets/js/gift.js"></script>
     <script src="/assets/js/deposit.js"></script>
-
     <!-- Loading animation, not to use jquery for these -->
     <script>
         <?php if (isset($_SESSION['loading']) && $_SESSION['loading'] === true): ?>
