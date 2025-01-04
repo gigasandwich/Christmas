@@ -128,7 +128,7 @@
     <!-- Custom Scripts -->
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dashboard.js"></script>
-    <script src="/assets/js/gift.js"></script>
+    <script src="/assets/js/account.js"></script>
     <script src="/assets/js/deposit.js"></script>
     <!-- Loading animation, not to use jquery for these -->
     <script>

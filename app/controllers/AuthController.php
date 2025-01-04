@@ -63,7 +63,7 @@ class AuthController {
                 Flight::render('auth/template', $data);
             }
         } catch (\Exception $e) {
-            Flight::render('error', ['message' => "AuthController->userLogin(): " . $e->getMessage()]);
+            Flight::render('error', ['message' => "AuthController->userLogin(): " . $e->getMessage()]); // error is the first file in view/
         }
     }
 

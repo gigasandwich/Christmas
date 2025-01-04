@@ -14,7 +14,7 @@
                                     <p class="lead">Please create an account to get started</p>
                                     <!-- Error message display -->
                                     <?php if (!empty($message)): ?>
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-secondary" role="alert">
                                             <?= htmlspecialchars($message) ?>
                                         </div>
                                     <?php endif; ?>

@@ -32,11 +32,6 @@ $(document).ready(function () {
             type: 'GET',
             data: { girls, boys },
             success: function (response) {
-                if (response.error) {
-                    showModalMessage(response.message);
-                    return;
-                }
-
                 const gifts = response.gifts || [];
                 totalPrice = response.total_price || 0;
 
@@ -56,7 +51,8 @@ $(document).ready(function () {
                 $("#total-price-button").attr('data-value', totalPrice).text(`$${totalPrice}`);
             },
             error: function (xhr) {
-                showModalMessage("Error fetching gifts");
+                let response = JSON.parse(xhr.responseText);
+                showModalMessage(response.message);
             }
         });
     }
@@ -68,7 +64,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: '/api/replace-gift',
-            method: 'GET', // TODO: make it POST method but too lazy
+            method: 'GET', // TODO: make it POST method (too lazy)
             data: { index: giftIndex },
             success: function (response) {
                 const newGift = response.new_gift;
@@ -79,13 +75,12 @@ $(document).ready(function () {
                 const newGiftCard = createGiftCard(newGift);
                 card.replaceWith(newGiftCard);
 
-                // Reset the button 
-                btn.text('Replace Gift').prop('disabled', false);
-                // Update the total price 
-                $('#total-price-button').text(`$${totalPrice}`);
+                btn.text('Replace Gift').prop('disabled', false); // Reset the button 
+                $('#total-price-button').text(`$${totalPrice}`); // Update the total price 
             },
-            error: function () {
-                showModalMessage('Error replacing the gift. Please try again.');
+            error: function (xhr) {
+                let response = JSON.parse(xhr.responseText);
+                showModalMessage(response.message);
                 btn.text('Replace Gift').prop('disabled', false);
             }
         });

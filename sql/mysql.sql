@@ -6,8 +6,9 @@ DROP TABLE IF EXISTS christmas_gift;
 DROP TABLE IF EXISTS christmas_category;
 DROP TABLE IF EXISTS christmas_user;
 DROP VIEW IF EXISTS christmas_user_balance_view;
-DROP VIEW IF EXISTS christmas_user_deposits_view;
-DROP VIEW IF EXISTS christmas_non_accepted_user_deposits_view;
+DROP VIEW IF EXISTS christmas_deposits_view;
+DROP VIEW IF EXISTS christmas_non_accepted_deposits_view;
+DROP VIEW IF EXISTS christmas_accepted_deposits_view;
 DROP VIEW IF EXISTS christmas_user_withdrawals_view;
 
 -- ------------------------------
@@ -85,9 +86,9 @@ GROUP BY
     u.user_id;
 
 -- ------------------------------
--- View for Deposits (christmas_user_deposits_view)
+-- View for Deposits (positive moves), negative ones are withdrawals
 -- ------------------------------
-CREATE VIEW christmas_user_deposits_view AS
+CREATE VIEW christmas_deposits_view AS
 SELECT
     u.user_id, u.username, m.move_id, m.amount,  m.description, m.date, m.is_accepted
 FROM
@@ -97,39 +98,21 @@ JOIN
 WHERE
     m.amount > 0;
 
-CREATE VIEW christmas_non_accepted_user_deposits_view AS
+CREATE VIEW christmas_non_accepted_deposits_view AS
+SELECT 
+    *
+FROM 
+    christmas_deposits_view
+WHERE 
+    is_accepted = 0;
+
+CREATE VIEW christmas_accepted_deposits_view AS
 SELECT 
     *
 FROM 
     christmas_user_deposits_view
 WHERE 
     is_accepted = 0;
--- ------------------------------
--- View for Withdrawals
--- ------------------------------
-CREATE VIEW christmas_user_withdrawals_view AS
-SELECT
-    u.user_id, u.username, m.move_id, m.amount,  m.description, m.date
-FROM
-    christmas_user u
-JOIN
-    christmas_move m ON u.user_id = m.user_id
-WHERE
-    m.amount < 0;
-
--- ------------------------------
--- View for the bought gifts
--- ------------------------------
-CREATE VIEW christmas_gift_transaction_view AS
-SELECT  g.gift_id, g.gift_name, g.category_id, g.price, g.description, g.stock_quantity, g.pic, t.transaction_id, t.user_id, t.quantity
-FROM 
-    christmas_gift_transaction t
-JOIN 
-    christmas_gift g
-ON 
-    t.gift_id = g.gift_id
-GROUP BY
-    t.user_id;
 
 -- ------------------------------
 -- INSERT INTO STATEMENTS

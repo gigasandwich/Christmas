@@ -19,13 +19,7 @@ class MoveModel {
      */
     public function getAll()
       {
-        $query = "SELECT 
-                      m.move_id,
-                      m.user_id,
-                      m.amount,
-                      m.description,
-                      m.move_date,
-                      username
+        $query = "SELECT  m.move_id, m.user_id, m.amount, m.description, m.move_date, username
                   FROM 
                       christmas_move m
                   JOIN 
@@ -46,14 +40,7 @@ class MoveModel {
 
 
     public function getNonAcceptedDeposits() {
-        $query = "SELECT  * FROM christmas_non_accepted_user_deposits_view";
-        $STH = $this->db->prepare($query);
-        $STH->execute();
-        return $STH->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getAllWithdrawals() {
-        $query = "SELECT * FROM christmas_user_withdrawals_view";
+        $query = "SELECT  * FROM christmas_non_accepted_deposits_view";
         $STH = $this->db->prepare($query);
         $STH->execute();
         return $STH->fetchAll(PDO::FETCH_ASSOC);

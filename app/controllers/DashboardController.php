@@ -61,7 +61,7 @@ class DashboardController
     {
         $balance = $this->userModel->getActualUserBalance();
         if(!$this->giftModel->canBuyGift($balance)) {
-            Flight::json(['error' => true, 'message' => 'You don\'t have enough money'], 400);
+            Flight::json(['error' => true, 'message' => 'You don\'t have enough money'], 400); // xhr error 
             return;
         }
         // query for GET and data for POST 😭
@@ -90,7 +90,7 @@ class DashboardController
             Flight::json(['new_gift' => $newGift, 'total_price' => $totalPrice]);
         }
         else
-            Flight::json(['error' => 'No gift index provided'], 400);
+            Flight::json(['error' => true, 'message' => 'No gift index provided'], 400);
     }
 
 
