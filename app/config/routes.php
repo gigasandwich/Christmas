@@ -14,7 +14,6 @@ use flight\net\Router;
  * @var Engine $app
  */
 
-session_start();
 
 $router->get('/', function (){
     Flight::render('landing/index');

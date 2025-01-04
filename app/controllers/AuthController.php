@@ -54,7 +54,7 @@ class AuthController {
             $result = $this->userModel->authenticateUser($username, $password);
 
             if ($result['status'] === 'success') {
-                // Session is started at routes.php
+                // Session is started at bootstrap.php
                 $_SESSION['user'] = $result['user'];
                 $_SESSION['loading'] = true;
                 Flight::redirect('/main');
