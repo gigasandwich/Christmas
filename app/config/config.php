@@ -71,8 +71,8 @@ return [
 		// uncomment the below 4 lines for mysql
 		 'host' => 'localhost',
 		 'dbname' => 'db_s2_ETU003286',
-		 'user' => 'ETU003286', 
-		 'password' => 'ycrOEEkI'
+		 'user' => 'root', 
+		 'password' => ''
 
 		// uncomment the following line for sqlite
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite'

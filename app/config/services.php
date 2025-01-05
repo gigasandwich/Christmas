@@ -28,13 +28,17 @@ $app->register('db', $pdoClass, [ $dsn, $config['database']['user'] ?? null, $co
 // $app->register('redis', Redis::class, [ $config['redis']['host'], $config['redis']['port'] ]);
 
 Flight::map('userModel', function () {
-    return new App\Models\UserModel(Flight::db()); // So we don't have to use/include everytime
+    return new app\models\UserModel(Flight::db()); // So we don't have to use/include everytime
 });
 
 Flight::map('giftModel', function () {
-    return new App\Models\GiftModel(Flight::db());
+    return new app\models\GiftModel(Flight::db());
 });
 
 Flight::map('moveModel', function () {
-    return new App\Models\MoveModel(Flight::db());
+    return new app\models\MoveModel(Flight::db());
+});
+
+Flight::map('crudModel', function () {
+    return new app\models\CrudModel(Flight::db());
 });

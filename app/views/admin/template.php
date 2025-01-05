@@ -29,11 +29,26 @@
 
                 <!-- Navbar Links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Start -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/main">Home</a>
+                        </li>
+                        <li class="nav-item ms-3">
+                            <button id="addGiftBtn" class="nav-link" data-bs-toggle="modal" data-bs-target="#addGiftModal">Add New gift</button>
+                        </li>
+                        <li class="nav-item ms-3">
+                            <a class="nav-link" href="#modify-table">Gifts lists</a>
+                        </li>
+                    </ul>
+
+                    <!-- End -->
                     <ul class="navbar-nav ms-auto d-flex gap-2 align-items-center">
                         <li class="nav-item d-flex align-items-center me-3">
                             <i class="fas fa-user text-primary me-2"></i>
                             <span class="fw-bold text-primary"> <?= $username ?></span>
                         </li>
+
                         <!-- Theme Switch Button -->
                         <li class="nav-item me-3">
                             <?php include './layouts/btn-theme.php'; ?>

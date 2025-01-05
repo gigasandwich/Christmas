@@ -130,13 +130,7 @@ INSERT INTO christmas_category (category_id, category_name) VALUES
 (3, 'neutral');
 
 INSERT INTO christmas_move (user_id, amount, description, date) VALUES
-(2, 50, 'Deposit', '2024-12-2'),
-(2, 100, 'Deposit', '2024-12-5'),
-(2, 150, 'Deposit', '2024-12-7'),
-(2, 175, 'Deposit', '2024-12-9'),
-(2, 200, 'Deposit', '2024-12-20'),
-(2, 300, 'Deposit', '2024-12-21'),
-(2, 300, 'Deposit', '2024-12-25');
+(2, 550, 'Deposit', '2024-12-2'); -- test
 
 
 INSERT INTO christmas_gift (gift_name, category_id, price, description, stock_quantity, pic) VALUES

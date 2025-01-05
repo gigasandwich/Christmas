@@ -1,24 +1,32 @@
 <?php
-namespace App\Controllers;
+namespace app\Controllers;
 
 use Flight;
 
 class AdminController {
     protected $moveModel;
+    protected $crudModel;
+    protected $giftModel;
+
+
     protected $user;
     
     public function __construct() { 
         $this->moveModel = Flight::moveModel();
+        $this->crudModel = Flight::crudModel();
+        $this->giftModel = Flight::giftModel();
         $this->user = $_SESSION['user'];
     }
 
     public function renderDashboard() {
         $deposits = $this->getNonAcceptedDeposits();
+        $gifts = $this->giftModel->getAvailableGifts();
         $data = [
             'title' => 'Giftmas Admin Dashboard',
             'page' => 'index',
             'username' => $this->user['username'],
-            'deposits' => $deposits
+            'deposits' => $deposits,
+            'gifts' => $gifts
         ];
         Flight::render('admin/template', $data);
     }
@@ -50,4 +58,40 @@ class AdminController {
         $deposits = $this->getNonAcceptedDeposits();
         Flight::json($deposits);
     }
+    
+    // ----------------------------------------------------
+    // CRUD Methods
+    // ----------------------------------------------------
+
+    public function createGift() {
+        $data = [
+            'gift_name' => $_POST['gift_name'],
+            'category_id' => $_POST['category_id'],
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'stock_quantity' => $_POST['stock_quantity'],
+            'pic' => $_POST['pic']
+        ];
+        $this->crudModel->insert('gift', $data);
+        Flight::redirect('/admin');
+    }
+    
+    public function updateGift($id) {
+        $data = [
+            'gift_name' => $_POST['gift_name'],
+            'category_id' => $_POST['category_id'],
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'stock_quantity' => $_POST['stock_quantity'],
+            'pic' => $_POST['pic']
+        ];
+        $this->crudModel->update('gift', $data, $id);
+        Flight::redirect('/admin');
+    }
+    
+    public function deleteGift($id) {
+        $this->crudModel->delete('gift', $id);
+        Flight::redirect('/admin');
+    }
+    
 }

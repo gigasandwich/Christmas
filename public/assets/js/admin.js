@@ -8,7 +8,9 @@ $(document).ready(function () {
      * So $('.reject-btn').on('click', function(e){}) Won't work 
      */        
 
-    // REJECT
+    // ----------------------------------------------------
+    // Reject
+    // ----------------------------------------------------
     $('#deposit-list').on('click', '.reject-btn', function (e) {
         e.preventDefault(); // Doesn't show the pretty print json response
         const depositId = $(this).data('deposit-id');
@@ -26,7 +28,9 @@ $(document).ready(function () {
         });
     });
 
-    // ADD
+    // ----------------------------------------------------
+    // Add
+    // ----------------------------------------------------
     $('#deposit-list').on('click', '.accept-btn', function (e) {
         e.preventDefault(); 
         const depositId = $(this).data('deposit-id');
@@ -69,7 +73,35 @@ $(document).ready(function () {
             $('#deposit-list tbody').append(html);
         });
     };
+
+    // ----------------------------------------------------
+    // CRUD 
+    // ----------------------------------------------------
+    
+    $('.delete-btn').click(function () {
+        return confirm("Are you sure you want to delete this record?");
+    });
+    
+    $('#modifyModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let modal = $(this);
+    
+        // Filling datas to the modal
+        let columnNames = ['gift_id', 'gift_name', 'category_name', 'price', 'description', 'stock_quantity'];
+        for (let column in columnNames) { 
+            let value = button.data(`${column}`);
+            modal.find(`#modal-${column}`).val(value);
+        } 
+    
+        let id = button.data('id');
+        modal.find('#modal-id').val(id);
+    
+        let tableName = 'christmas_gift';
+        let formAction = "/update/" + tableName + "/" + id;
+        modal.find('form').attr('action', formAction);
+    });
 });
+
 
 
 /*
