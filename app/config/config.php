@@ -69,10 +69,10 @@ if (Debugger::$showBar && php_sapi_name() !== 'cli') {
 return [
 	'database' => [
 		// uncomment the below 4 lines for mysql
-		 'host' => 'localhost',
+		 'host' => '127.0.0.1',
 		 'dbname' => 'db_s2_ETU003286',
 		 'user' => 'root', 
-		 'password' => ''
+		 'password' => ''					
 
 		// uncomment the following line for sqlite
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite'
