@@ -112,6 +112,7 @@ class CrudModel
         $query = "INSERT INTO christmas_$tableName (" . implode(", ", $columns) . ") 
                   VALUES (" . implode(", ", $placeholders) . ")";
     
+        
         $STH = $DBH->prepare($query);
     
         try {
@@ -122,7 +123,7 @@ class CrudModel
             }
             $STH->execute();
         } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            throw $e;
         }
     }
 
