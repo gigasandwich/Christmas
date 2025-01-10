@@ -87,5 +87,5 @@ $router->group('/update', function () use ($router) {
 
 // DELETE
 $router->group('/delete', function () use ($router) {
-    $router->get("/@tableName/@id", [AdminController::class, 'deleteGift']); // Generalised
+    $router->get("/@tableName", [AdminController::class, 'deleteGift']); // Generalised
 });

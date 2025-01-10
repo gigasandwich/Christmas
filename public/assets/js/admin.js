@@ -83,23 +83,26 @@ $(document).ready(function () {
     });
     
     $('#modifyModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
+        let button = $(event.relatedTarget); // Button that triggered the modal
         let modal = $(this);
     
-        // Filling datas to the modal
         let columnNames = ['gift_id', 'gift_name', 'category_name', 'price', 'description', 'stock_quantity'];
-        for (let column in columnNames) { 
-            let value = button.data(`${column}`);
-            modal.find(`#modal-${column}`).val(value);
-        } 
     
-        let id = button.data('id');
-        modal.find('#modal-id').val(id);
+        // Populate fields dynamically using columnNames array
+        columnNames.forEach(column => {
+            let value = button.data(column); 
+            modal.find(`[name="${column}"]`).val(value); // Set the value of the input
+        });
     
-        let tableName = 'christmas_gift';
-        let formAction = "/update/" + tableName + "/" + id;
-        modal.find('form').attr('action', formAction);
+        // Handle the pic field separately
+        let pic = button.data('pic');
+        modal.find('[name="previous_pic"]').val(pic); // Set hidden input for previous_pic
+    
+        // Update the form action with gift_id
+        let giftId = button.data('gift_id');
+        modal.find('form').attr('action', `/update/gift/${giftId}`);
     });
+    
 });
 
 

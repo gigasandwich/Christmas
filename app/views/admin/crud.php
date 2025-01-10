@@ -96,10 +96,11 @@
                 <td>
                     <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modifyModal"
                         data-gift_id="<?= $gift['gift_id'] ?>" data-gift_name="<?= $gift['gift_name'] ?>"
-                        data-category_name="<?= $gift['category_name'] ?>" data-price="<?= $gift['price'] ?>"
-                        data-description="<?= $gift['description'] ?>"
-                        data-stock_quantity="<?= $gift['stock_quantity'] ?>">Edit</a>
-                    <a href="/delete/gift/<?= $gift['gift_id'] ?>" class="btn btn-danger delete-btn">Delete</a>
+                        data-category_id="<?= $gift['category_id'] ?>" data-price="<?= $gift['price'] ?>"
+                        data-description="<?= $gift['description'] ?>" data-stock_quantity="<?= $gift['stock_quantity'] ?>"
+                        data-pic="<?= $gift['pic'] ?>">Edit</a>
+
+                    <a href="/delete/gift/?gift_id=<?= $gift['gift_id'] ?>" class="btn btn-danger delete-btn">Delete</a>
                 </td>
             </tr>
         <?php } ?>
@@ -111,81 +112,61 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modifyModalLabel">Modify gift</h5>
+                <h5 class="modal-title" id="modifyModalLabel">Modify Gift</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="" id="modifyForm">
+                <form id="modifyForm" method="POST" action="/update/gift" enctype="multipart/form-data">
                     <div class="row g-3">
                         <!-- Columns -->
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="modal-gift_id" class="form-label">Gift_id</label>
-                                <input type="text" class="form-control" name="gift_id" disabled
-                                    value="<?= $gift['gift_id'] ?>">
+                                <label for="modal-gift_id" class="form-label">Gift ID</label>
+                                <input type="text" class="form-control" name="gift_id" readonly>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="modal-gift_name" class="form-label">Gift name</label>
-                                <input type="text" class="form-control" name="gift_name" value="New gift"
-                                    value="<?= $gift['gift_name'] ?>">
+                                <label for="modal-gift_name" class="form-label">Gift Name</label>
+                                <input type="text" class="form-control" name="gift_name">
                             </div>
                         </div>
                         <div class="col-md-12 col-12">
                             <div class="mb-3">
                                 <label for="modal-category_id" class="form-label">Category</label>
-                                <div class="card d-flex">
-                                    <?= $gift['category_id'] ?>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="category_id" value="1"
-                                            id="category-1" checked>
-                                        <label class="form-check-label" for="category-1">
-                                            Girl
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="category_id" value="2"
-                                            id="category-2" checked>
-                                        <label class="form-check-label" for="category-2">
-                                            Boy
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="category_id" value="3"
-                                            id="category-3" checked>
-                                        <label class="form-check-label" for="category-3">
-                                            Neutral
-                                        </label>
-                                    </div>
-                                </div>
+                                <select class="form-select" name="category_id" id="modal-category_id" required>
+                                    <option value="1">Girl</option>
+                                    <option value="2">Boy</option>
+                                    <option value="3">Neutral</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
                                 <label for="modal-price" class="form-label">Price</label>
-                                <input type="number" class="form-control" name="price" value="<?= $gift['price'] ?>">
+                                <input type="number" class="form-control" name="price" step="0.01">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
                                 <label for="modal-description" class="form-label">Description</label>
-                                <textarea type="text" class="form-control" name="description"
-                                    rows="1"><?= $gift['description'] ?></textarea>
+                                <textarea type="text" class="form-control" name="description" rows="1"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="modal-stock_quantity" class="form-label">Stock quantity</label>
-                                <input type="number" class="form-control" name="stock_quantity"
-                                    value="<?= $gift['stock_quantity'] ?>">
+                                <label for="modal-stock_quantity" class="form-label">Stock Quantity</label>
+                                <input type="number" class="form-control" name="stock_quantity">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
                                 <label for="modal-pic" class="form-label">Pic</label>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
-                                <input type="file" class="form-control" name="pic" value="<?= $gift['pic'] ?>">
+                                <!-- Previous -->
+                                <input type="hidden" name="previous_pic">
+                                <!-- New -->
+                                <input type="file" class="form-control" name="pic">
                             </div>
                         </div>
                     </div>
@@ -196,5 +177,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

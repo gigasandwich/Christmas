@@ -77,7 +77,7 @@ class AdminController
             'price' => $_POST['price'],
             'description' => $_POST['description'],
             'stock_quantity' => $_POST['stock_quantity'],
-            'pic' => null 
+            'pic' => null
         ];
 
         try {
@@ -119,7 +119,7 @@ class AdminController
             Flight::render('error', ['message' => "AdminController->uploadFile(): " . $message]);
             exit;
         }
-    
+
         return $uploadedFileName; // We return it to use it later
     }
 
@@ -131,14 +131,30 @@ class AdminController
             'price' => $_POST['price'],
             'description' => $_POST['description'],
             'stock_quantity' => $_POST['stock_quantity'],
-            'pic' => $_POST['pic']
+            'pic' => null
         ];
-        $this->crudModel->update('gift', $data, $id);
+        
+        try {
+            $pic = $_POST['previous_pic']; // Default 
+            if (isset($_FILES['pic']) && $_FILES['pic']['error'] === UPLOAD_ERR_OK) {
+                $pic = $this->uploadFile($_FILES['pic']); // Upload the new file
+            }
+            $data['pic'] = $pic;
+            $id = $_POST['gift_id'];
+            $this->crudModel->update('gift', $data, $id);
+        } catch (\PDOException $e) {
+            $message = $e->getMessage();
+            Flight::render('error', ['message' => "AdminController->updateGift(): " . $message]);
+            exit;
+        }
+
         Flight::redirect('/admin');
     }
 
-    public function deleteGift($id)
-    {
+
+    public function deleteGift()
+    {   
+        $id = $_GET['gift_id'];
         $this->crudModel->delete('gift', $id);
         Flight::redirect('/admin');
     }
